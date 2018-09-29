@@ -3,7 +3,7 @@ import 'typeface-roboto'
 import logo from './logo.svg';
 import './App.css';
 import SearchAppBar from './dashboard/SearchAppBar';
-
+import Entreprises from './views/Entreprises';
 
 class App extends Component {
   render() {
@@ -11,9 +11,8 @@ class App extends Component {
       <div className="App">
         <SearchAppBar>
         </SearchAppBar>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <Entreprises>
+        </Entreprises>
       </div>
     );
   }
