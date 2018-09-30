@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -42,14 +43,20 @@ class AppMenuNew extends React.Component {
     const sideList = (
       <List component="nav">
         <ListItem button>
-          <ListItemText primary="Entreprises" />
+          <Link to={`/entreprises`} >
+            <ListItemText primary="Entreprises" />
+          </Link>
         </ListItem>
         <Divider />
         <ListItem button divider>
-          <ListItemText primary="Ouvrages" />
+          <Link to={`/ouvrages`} >
+            <ListItemText primary="Ouvrages" />
+          </Link>
         </ListItem>
         <ListItem button>
-          <ListItemText primary="Fichier consulaires" />
+          <Link to={`/fichier-consulaires`} >
+            <ListItemText primary="Fichier consulaires" />
+          </Link>
         </ListItem>
         <Divider light />
         <ListItem button>

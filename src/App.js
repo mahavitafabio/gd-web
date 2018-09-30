@@ -1,19 +1,60 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import 'typeface-roboto'
 import logo from './logo.svg';
 import './App.css';
 import SearchAppBar from './dashboard/SearchAppBar';
 import Entreprises from './views/Entreprises';
+import Ouvrages from './views/Ouvrages';
+import FichierConsulaires from './views/FichierConsulaires';
+
+const routes = [
+  {
+    path: "/",
+    exact: true,
+    toolbar: () => <SearchAppBar />,
+    main: () => <Entreprises />
+  },
+  {
+    path: "/entreprises",
+    toolbar: () => <SearchAppBar/>,
+    main: () => <Entreprises />
+  },
+  {
+    path: "/fichier-consulaires",
+    toolbar: () => <SearchAppBar/>,
+    main: () => <FichierConsulaires />
+  },
+  {
+    path: "/ouvrages",
+    toolbar: () => <SearchAppBar />,
+    main: () => <Ouvrages />
+  }
+];
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <SearchAppBar>
-        </SearchAppBar>
-        <Entreprises>
-        </Entreprises>
-      </div>
+      <Router>
+        <div className="App">
+          {routes.map((route, index) => (
+              <Route
+                key={index}
+                path={route.path}
+                exact={route.exact}
+                component={route.toolbar}
+              />
+            ))}
+            {routes.map((route, index) => (
+              <Route
+                key={index}
+                path={route.path}
+                exact={route.exact}
+                component={route.main}
+              />
+          ))}
+        </div>
+      </Router>
     );
   }
 }
