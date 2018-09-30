@@ -4,13 +4,13 @@ import AddIcon from '@material-ui/icons/Add';
 import PrintIcon from '@material-ui/icons/Print';
 import Ionicon from 'react-ionicons';
 
-class Entreprises extends React.Component {
+class CO extends React.Component {
   componentDidMount() {
-    this.getEntrepriseList();
+    this.getCoList();
   }
 
-  getEntrepriseList() {
-    fetch('http://localhost:8080/')
+  getCoList() {
+    fetch('http://localhost:8080/Co')
       .then(( results ) => console.log(results.json()));
   }
   render() {
@@ -51,4 +51,4 @@ class Entreprises extends React.Component {
     );
   }
 }
-export default Entreprises;
+export default CO;

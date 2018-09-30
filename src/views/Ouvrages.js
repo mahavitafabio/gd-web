@@ -4,13 +4,13 @@ import AddIcon from '@material-ui/icons/Add';
 import PrintIcon from '@material-ui/icons/Print';
 import Ionicon from 'react-ionicons';
 
-class Entreprises extends React.Component {
+class Ouvrages extends React.Component {
   componentDidMount() {
-    this.getEntrepriseList();
+    this.getOuvrageList();
   }
 
-  getEntrepriseList() {
-    fetch('http://localhost:8080/')
+  getOuvrageList() {
+    fetch('http://localhost:8080/Ouvrages')
       .then(( results ) => console.log(results.json()));
   }
   render() {
@@ -31,10 +31,6 @@ class Entreprises extends React.Component {
         Ajouter
         </Button>
         <Button variant="contained" color="primary" style={buttonStyle}>
-        <Ionicon icon="md-brush" fontSize="35px" color="white"/>
-        Modifier
-        </Button>
-        <Button variant="contained" color="primary" style={buttonStyle}>
         <Ionicon icon="md-cloud-upload" fontSize="35px" color="white"/>
         Importer
         </Button>
@@ -51,4 +47,4 @@ class Entreprises extends React.Component {
     );
   }
 }
-export default Entreprises;
+export default Ouvrages;
