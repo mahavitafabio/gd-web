@@ -11,23 +11,23 @@ class ViewHeader extends React.Component {
 		return (
 	        <div>
 		        <Button variant="contained" color="primary" style={buttonStyle}>
-		        	<Ionicon icon="md-add" fontSize="25px" color="white"/>
+		        	<Ionicon icon="md-add" fontSize="15px" color="white"/>  
 		        	Ajouter
 		        </Button>
 		        <Button variant="contained" color="primary" style={buttonStyle}>
-		        	<Ionicon icon="md-brush" fontSize="25px" color="white"/>
+		        	<Ionicon icon="md-brush" fontSize="15px" color="white"/>  
 		        	Modifier
 		        </Button>
 		        <Button variant="contained" color="primary" style={buttonStyle}>
-		        	<Ionicon icon="md-cloud-upload" fontSize="25px" color="white"/>
+		        	<Ionicon icon="md-cloud-upload" fontSize="15px" color="white"/>  
 		        	Importer
 		        </Button>
 		        <Button variant="contained" color="primary" style={buttonStyle}>
-		        	<Ionicon icon="md-cloud-download" fontSize="25px" color="white"/>
+		        	<Ionicon icon="md-cloud-download" fontSize="15px" color="white"/>  
 		        	Exporter
 		        </Button>
-		        <Button variant="contained" color="primary" style={buttonStyle}>
-		        	<Ionicon icon="md-print" fontSize="25px" color="white"/>
+		        <Button variant="contained" color="primary" style={buttonStyle}>  
+		        	<Ionicon icon="md-print" fontSize="15px" color="white"/>
 		        	Imprimer
 		      	</Button>
 	       </div>
