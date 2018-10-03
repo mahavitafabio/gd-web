@@ -6,6 +6,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import ViewHeader from './ViewHeader';
 import Paper from '@material-ui/core/Paper';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 const paperStyle = {
   width: '100%',
@@ -26,6 +32,7 @@ class CO extends React.Component {
       super(props);
       this.state = {
         valueList: [],
+        isAddDrawerOpen: false,
       };
   }
 
@@ -39,6 +46,14 @@ class CO extends React.Component {
     .then(result=>result.json())
     .then(items=>this.setState({valueList: items}));
   }
+  
+  handleClickOpen = () => {
+    this.setState({ isAddDrawerOpen: true });
+  };
+
+  handleClose = () => {
+    this.setState({ isAddDrawerOpen: false });
+  };
 
   render() {
     const viewStyle= {
@@ -48,7 +63,7 @@ class CO extends React.Component {
 
     return (
       <div style={viewStyle}>
-        <ViewHeader/>
+        <ViewHeader addButtonHandler={this.handleClickOpen.bind(this)}/>
         <Paper style={paperStyle}>
         <Table style={tableStyle}>
           <TableHead>
@@ -80,6 +95,56 @@ class CO extends React.Component {
           </TableBody>
         </Table>
         </Paper>
+        <Dialog open={this.state.isAddDrawerOpen} aria-labelledby="simple-dialog-title">
+          <DialogTitle id="simple-dialog-title">Ajouter un CO</DialogTitle>
+          <DialogContent>
+            <TextField
+              id="nom-entreprise"
+              label="Nom entreprise"
+              placeholder="Nom entreprise"
+              margin="normal"
+            />
+            <br/>
+            <TextField
+              id="enterprise-adresse"
+              label="Adresse"
+              placeholder="Adresse"
+              multiline
+              margin="normal"
+            />
+            <br/>
+            <TextField
+              id="activite-principale"
+              label="Activite principale"
+              placeholder="Activite principale"
+              multiline
+              margin="normal"
+            />
+            <br/>
+            <TextField
+              id="entreprise-contact"
+              label="Contact"
+              type="number"
+              margin="normal"
+            />
+            <br/>
+            <TextField
+              id="nom-responsable"
+              label="Nom responsable"
+              placeholder="Nom responsable"
+              margin="normal"
+            />
+
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button color="primary">
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }

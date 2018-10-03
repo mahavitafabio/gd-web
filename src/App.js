@@ -7,6 +7,7 @@ import SearchAppBar from './dashboard/SearchAppBar';
 import Entreprises from './views/Entreprises';
 import Ouvrages from './views/Ouvrages';
 import FichierConsulaires from './views/FichierConsulaires';
+import CertificatOrigine from './views/CertificatOrigine';
 
 const routes = [
   {
@@ -29,6 +30,11 @@ const routes = [
     path: "/ouvrages",
     toolbar: () => <SearchAppBar />,
     main: () => <Ouvrages />
+  },
+  {
+    path: "/certificat-origine",
+    toolbar: () => <SearchAppBar />,
+    main: () => <CertificatOrigine />
   }
 ];
 

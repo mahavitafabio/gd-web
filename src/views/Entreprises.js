@@ -69,8 +69,8 @@ class Entreprises extends React.Component {
             <TableRow>
               <TableCell>Entreprise Id</TableCell>
               <TableCell>Nom Entreprise</TableCell>
-              <TableCell>Address Enterprise</TableCell>
-              <TableCell>Activite Principale</TableCell>
+              <TableCell>Adresse Enterprise</TableCell>
+              <TableCell>Activité Principale</TableCell>
               <TableCell>Contact</TableCell>
               <TableCell>Nom Responsable</TableCell>
             </TableRow>
@@ -98,19 +98,42 @@ class Entreprises extends React.Component {
           <DialogTitle id="simple-dialog-title">Ajouter un Entreprise</DialogTitle>
           <DialogContent>
             <TextField
-              id="entreprise-name"
-              label="Name"
-              placeholder="Name"
+              id="nom-entreprise"
+              label="Nom entreprise"
+              placeholder="Nom entreprise"
               margin="normal"
             />
             <br/>
             <TextField
-              id="enterprise-address"
-              label="Address"
-              placeholder="Address"
+              id="enterprise-adresse"
+              label="Adresse"
+              placeholder="Adresse"
               multiline
               margin="normal"
             />
+            <br/>
+            <TextField
+              id="activite-principale"
+              label="Activite principale"
+              placeholder="Activite principale"
+              multiline
+              margin="normal"
+            />
+            <br/>
+            <TextField
+              id="entreprise-contact"
+              label="Contact"
+              type="number"
+              margin="normal"
+            />
+            <br/>
+            <TextField
+              id="nom-responsable"
+              label="Nom responsable"
+              placeholder="Nom responsable"
+              margin="normal"
+            />
+
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">

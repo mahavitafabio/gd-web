@@ -60,7 +60,9 @@ class AppMenuNew extends React.Component {
         </ListItem>
         <Divider light />
         <ListItem button>
-          <ListItemText primary="C.O" />
+          <Link to={`/certificat-origine`} >
+            <ListItemText primary="Certificat origine" />
+          </Link>
         </ListItem>
       </List>
     );
