@@ -6,6 +6,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import ViewHeader from './ViewHeader';
 import Paper from '@material-ui/core/Paper';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 const paperStyle = {
   width: '100%',
@@ -26,9 +32,9 @@ class Entreprises extends React.Component {
       super(props);
       this.state = {
         valueList: [],
+        isAddDrawerOpen: false,
       };
   }
-
 
   componentDidMount() {
     this.getEntrepriseList();
@@ -40,6 +46,14 @@ class Entreprises extends React.Component {
     .then(items=>this.setState({valueList: items}));
   }
 
+  handleClickOpen = () => {
+    this.setState({ isAddDrawerOpen: true });
+  };
+
+  handleClose = () => {
+    this.setState({ isAddDrawerOpen: false });
+  };
+
   render() {
     const viewStyle= {
         height: '100%',
@@ -48,7 +62,7 @@ class Entreprises extends React.Component {
 
     return (
       <div style={viewStyle}>
-        <ViewHeader/>
+        <ViewHeader addButtonHandler={this.handleClickOpen.bind(this)}/>
         <Paper style={paperStyle}>
         <Table style={tableStyle}>
           <TableHead>
@@ -80,6 +94,33 @@ class Entreprises extends React.Component {
           </TableBody>
         </Table>
         </Paper>
+        <Dialog open={this.state.isAddDrawerOpen} aria-labelledby="simple-dialog-title">
+          <DialogTitle id="simple-dialog-title">Ajouter un Entreprise</DialogTitle>
+          <DialogContent>
+            <TextField
+              id="entreprise-name"
+              label="Name"
+              placeholder="Name"
+              margin="normal"
+            />
+            <br/>
+            <TextField
+              id="enterprise-address"
+              label="Address"
+              placeholder="Address"
+              multiline
+              margin="normal"
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button color="primary">
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }

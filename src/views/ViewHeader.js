@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import Ionicon from 'react-ionicons';
+import PropTypes, { instanceOf } from 'prop-types';
 
 const buttonStyle= {
     marginLeft: '40px'
 };
 
 class ViewHeader extends React.Component {
+
+  	constructor(props) {
+    	super(props);
+    }
+
 	render() {
 		return (
 	        <div>
-		        <Button variant="contained" color="primary" style={buttonStyle}>
+		        <Button variant="contained" color="primary" style={buttonStyle} onClick={this.props.addButtonHandler}>
 		        	<Ionicon icon="md-add" fontSize="15px" color="white"/>  
 		        	Ajouter
 		        </Button>
@@ -35,4 +41,7 @@ class ViewHeader extends React.Component {
 	}
 }
 
+ViewHeader.propTypes = {
+	addButtonHandler: PropTypes.func
+};
 export default ViewHeader;
