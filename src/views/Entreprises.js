@@ -33,6 +33,7 @@ class Entreprises extends React.Component {
       this.state = {
         valueList: [],
         isAddDrawerOpen: false,
+        newEntreprise: {}
       };
   }
 
@@ -53,6 +54,28 @@ class Entreprises extends React.Component {
   handleClose = () => {
     this.setState({ isAddDrawerOpen: false });
   };
+
+
+  saveEntreprise = () => {
+    console.log(JSON.stringify(this.state.newEntreprise));
+  };
+
+  handleChange(event) {
+    let newEntreprise = Object.assign({}, this.state.newEntreprise);
+    console.log(event.target);
+    if (event.target.id === 'nom-entreprise') {
+      newEntreprise.nomEntreprise = event.target.value;
+    } else if (event.target.id === 'enterprise-adresse') {
+      newEntreprise.adresseEntreprise = event.target.value;
+    } else if (event.target.id === 'activite-principale') {
+      newEntreprise.activitePrincipale = event.target.value;
+    } else if (event.target.id === 'entreprise-contact') {
+      newEntreprise.contact = event.target.value;
+    } else if (event.target.id === 'nom-responsable') {
+      newEntreprise.nomResponsable = event.target.value;
+    }
+    this.setState({newEntreprise});
+  }
 
   render() {
     const viewStyle= {
@@ -102,6 +125,8 @@ class Entreprises extends React.Component {
               label="Nom entreprise"
               placeholder="Nom entreprise"
               margin="normal"
+              value={this.state.newEntreprise.nomEntreprise}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -110,6 +135,8 @@ class Entreprises extends React.Component {
               placeholder="Adresse"
               multiline
               margin="normal"
+              value={this.state.newEntreprise.adresseEntreprise}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -118,6 +145,8 @@ class Entreprises extends React.Component {
               placeholder="Activite principale"
               multiline
               margin="normal"
+              value={this.state.newEntreprise.activitePrincipale}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -125,6 +154,8 @@ class Entreprises extends React.Component {
               label="Contact"
               type="number"
               margin="normal"
+              value={this.state.contact}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -132,6 +163,8 @@ class Entreprises extends React.Component {
               label="Nom responsable"
               placeholder="Nom responsable"
               margin="normal"
+              value={this.state.newEntreprise.nomResponsable}
+              onChange={this.handleChange.bind(this)}
             />
 
           </DialogContent>
@@ -139,7 +172,7 @@ class Entreprises extends React.Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button color="primary">
+            <Button color="primary" onClick={this.saveEntreprise}>
               Save
             </Button>
           </DialogActions>
