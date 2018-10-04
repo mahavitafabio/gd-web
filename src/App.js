@@ -32,7 +32,7 @@ const routes = [
     main: () => <Ouvrages />
   },
   {
-    path: "/certificat-origine",
+    path: "/certificat",
     toolbar: () => <SearchAppBar />,
     main: () => <CertificatOrigine />
   }

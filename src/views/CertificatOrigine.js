@@ -26,7 +26,7 @@ const tableStyle = {
   backgroundColor: 'white'
 }
 
-class CO extends React.Component {
+class CertificatOrigine extends React.Component {
 
   constructor(props) {
       super(props);
@@ -42,7 +42,7 @@ class CO extends React.Component {
   }
 
   getCoList() {
-    fetch('http://localhost:8080/enterprise')
+    fetch('http://localhost:8080/certificat')
     .then(result=>result.json())
     .then(items=>this.setState({valueList: items}));
   }
@@ -68,26 +68,38 @@ class CO extends React.Component {
         <Table style={tableStyle}>
           <TableHead>
             <TableRow>
-              <TableCell>Entreprise Id</TableCell>
-              <TableCell>Nom Entreprise</TableCell>
-              <TableCell>Adresse Enterprise</TableCell>
-              <TableCell>Activite Principale</TableCell>
-              <TableCell>Contact</TableCell>
-              <TableCell>Nom Responsable</TableCell>
+              <TableCell>Certificat Origine Id</TableCell>
+              <TableCell>Numero</TableCell>
+              <TableCell>Date</TableCell>
+              <TableCell>Nom entreprise</TableCell>
+              <TableCell>Adresse</TableCell>
+              <TableCell>Destination</TableCell>
+              <TableCell>Produit</TableCell>
+              <TableCell>Quantité exporté</TableCell>
+              <TableCell>Unité</TableCell>
+              <TableCell>Nombre de conteneur</TableCell>
+              <TableCell>Prix unitaire</TableCell>
+              <TableCell>Montant</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {this.state.valueList.map(row => {
               return (
-                <TableRow key={row.entreprisesId}>
+                <TableRow key={row.certificatId}>
                   <TableCell component="th" scope="row">
-                    {row.entreprisesId}
+                    {row.certificatId}
                   </TableCell>
+                  <TableCell>{row.numero}</TableCell>
+                  <TableCell>{row.date}</TableCell>
                   <TableCell>{row.nomEntreprise}</TableCell>
-                  <TableCell>{row.adresseEntreprise}</TableCell>
-                  <TableCell>{row.activitePrincipale}</TableCell>
-                  <TableCell>{row.contact}</TableCell>
-                  <TableCell>{row.nomResponsable}</TableCell>
+                  <TableCell>{row.adresse}</TableCell>
+                  <TableCell>{row.destination}</TableCell>
+                  <TableCell>{row.produit}</TableCell>
+                  <TableCell>{row.quantiteExport}</TableCell>
+                  <TableCell>{row.unite}</TableCell>
+                  <TableCell>{row.nombreConteneur}</TableCell>
+                  <TableCell>{row.prixUnitaire}</TableCell>
+                  <TableCell>{row.montant}</TableCell>
                   
                 </TableRow>
               );
@@ -99,14 +111,28 @@ class CO extends React.Component {
           <DialogTitle id="simple-dialog-title">Ajouter un CO</DialogTitle>
           <DialogContent>
             <TextField
-              id="nom-entreprise"
+              id="co-numero"
+              label="Numéro"
+              type="number"
+              margin="normal"
+            />
+            <br/>
+            <TextField
+              id="co-date"
+              label="Date"
+              type="date"
+              margin="normal"
+            />
+            <br/>
+            <TextField
+              id="co-nom-entreprise"
               label="Nom entreprise"
               placeholder="Nom entreprise"
               margin="normal"
             />
             <br/>
             <TextField
-              id="enterprise-adresse"
+              id="co-adresse"
               label="Adresse"
               placeholder="Adresse"
               multiline
@@ -114,26 +140,54 @@ class CO extends React.Component {
             />
             <br/>
             <TextField
-              id="activite-principale"
-              label="Activite principale"
-              placeholder="Activite principale"
+              id="co-destination"
+              label="Destination"
+              placeholder="Destination"
               multiline
               margin="normal"
             />
             <br/>
             <TextField
-              id="entreprise-contact"
-              label="Contact"
+              id="co-produit"
+              label="Produit"
+              placeholder="Produit"
+              margin="normal"
+            />
+            <br/>
+            <TextField
+              id="co-quatite-export"
+              label="Quantité exporté"
               type="number"
               margin="normal"
             />
             <br/>
             <TextField
-              id="nom-responsable"
-              label="Nom responsable"
-              placeholder="Nom responsable"
+              id="co-unite"
+              label="Unité"
+              placeholder="Unité"
               margin="normal"
             />
+            <TextField
+              id="co-nombre-conteneur"
+              label="Nombre de conteneur"
+              type="number"
+              margin="normal"
+            />
+            <br/>
+            <TextField
+              id="co-prix_unitaire"
+              label="Prix unitaire"
+              placeholder="Prix unitaire"
+              margin="normal"
+            />
+            <br/>
+            <TextField
+              id="co-montant"
+              label="Montant"
+              type="number"
+              margin="normal"
+            />
+
 
           </DialogContent>
           <DialogActions>
@@ -149,4 +203,4 @@ class CO extends React.Component {
     );
   }
 }
-export default CO;
+export default CertificatOrigine;
