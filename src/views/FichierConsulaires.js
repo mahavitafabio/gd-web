@@ -33,6 +33,7 @@ class FichierConsulaires extends React.Component {
       this.state = {
         valueList: [],
         isAddDrawerOpen: false,
+        newFichierConsulaire: {}
       };
   }
 
@@ -54,6 +55,39 @@ class FichierConsulaires extends React.Component {
   handleClose = () => {
     this.setState({ isAddDrawerOpen: false });
   };
+  
+  saveFichierConsulaire = () => {
+    console.log(JSON.stringify(this.state.newFichierConsulaire));
+  };
+  
+  handleChange(event) {
+    let newFichierConsulaire = Object.assign({}, this.state.newFichierConsulaire);
+    console.log(event.target);
+    if (event.target.id === 'raison-social') {
+      newFichierConsulaire.raisonSocial = event.target.value;
+    } else if (event.target.id === 'adresse') {
+      newFichierConsulaire.adresse = event.target.value;
+    } else if (event.target.id === 'capital-consulaire') {
+      newFichierConsulaire.capital = event.target.value;
+    } else if (event.target.id === 'date-creation') {
+      newFichierConsulaire.createdDate = event.target.value;
+    } else if (event.target.id === 'email-consulaire') {
+      newFichierConsulaire.email = event.target.value;
+    } else if (event.target.id === 'forme-juridique') {
+      newFichierConsulaire.formeJuridique = event.target.value;
+    } else if (event.target.id === 'numero-fiscal') {
+      newFichierConsulaire.numeroFiscal = event.target.value;
+    } else if (event.target.id === 'numero-identite') {
+      newFichierConsulaire.numeroIdentite = event.target.value;
+    } else if (event.target.id === 'numero-registre') {
+      newFichierConsulaire.numeroRegistre = event.target.value;
+    } else if (event.target.id === 'sigle-consulaire') {
+      newFichierConsulaire.sigle = event.target.value;
+    } else if (event.target.id === 'date-modification') {
+      newFichierConsulaire.updatedDate = event.target.value;
+    }
+    this.setState({newFichierConsulaire});
+  }
 
   render() {
     const viewStyle= {
@@ -112,26 +146,32 @@ class FichierConsulaires extends React.Component {
           <DialogTitle id="simple-dialog-title">Ajouter un Fichier Consulaire</DialogTitle>
           <DialogContent>
             <TextField
-              id="adresse"
-              label="Adresse"
-              placeholder="Adresse"
-              multiline
-              margin="normal"
-            />
-            <br/>
-            <TextField
               id="raison-social"
               label="Raison social"
               placeholder="Raison social"
               multiline
               margin="normal"
+              value={this.state.newFichierConsulaire.raisonSocial}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
-              id="capital"
+              id="adresse"
+              label="Adresse"
+              placeholder="Adresse"
+              multiline
+              margin="normal"
+              value={this.state.newFichierConsulaire.adresse}
+              onChange={this.handleChange.bind(this)}
+            />
+            <br/>
+            <TextField
+              id="capital-consulaire"
               label="Capital"
               type="number"
               margin="normal"
+              value={this.state.newFichierConsulaire.capital}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -139,13 +179,17 @@ class FichierConsulaires extends React.Component {
               label="Date création"
               type="date"
               margin="normal"
+              value={this.state.newFichierConsulaire.createdDate}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
-              id="email"
+              id="email-consulaire"
               label="Email"
               placeholder="Email"
               margin="normal"
+              value={this.state.newFichierConsulaire.email}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -154,6 +198,8 @@ class FichierConsulaires extends React.Component {
               placeholder="Forme juridique"
               multiline
               margin="normal"
+              value={this.state.newFichierConsulaire.formeJuridique}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -161,6 +207,8 @@ class FichierConsulaires extends React.Component {
               label="Numéro fiscal"
               type="number"
               margin="normal"
+              value={this.state.newFichierConsulaire.numeroFiscal}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -168,6 +216,8 @@ class FichierConsulaires extends React.Component {
               label="Numéro fiscal"
               type="number"
               margin="normal"
+              value={this.state.newFichierConsulaire.numeroIdentite}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -175,13 +225,17 @@ class FichierConsulaires extends React.Component {
               label="Numéro registre"
               type="number"
               margin="normal"
+              value={this.state.newFichierConsulaire.numeroRegistre}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
-              id="sigle"
+              id="sigle-consulaire"
               label="Sigle"
               placeholder="Sigle"
               margin="normal"
+              value={this.state.newFichierConsulaire.sigle}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -189,6 +243,8 @@ class FichierConsulaires extends React.Component {
               label="Date modification"
               type="date"
               margin="normal"
+              value={this.state.newFichierConsulaire.updatedDate}
+              onChange={this.handleChange.bind(this)}
             />
 
           </DialogContent>
@@ -196,7 +252,7 @@ class FichierConsulaires extends React.Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button color="primary">
+            <Button color="primary" onClick={this.saveFichierConsulaire}>
               Save
             </Button>
           </DialogActions>

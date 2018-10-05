@@ -33,6 +33,7 @@ class Ouvrages extends React.Component {
       this.state = {
         valueList: [],
         isAddDrawerOpen: false,
+        newOuvrage: {}
       };
   }
 
@@ -53,6 +54,31 @@ class Ouvrages extends React.Component {
   handleClose = () => {
     this.setState({ isAddDrawerOpen: false });
   };
+  
+  saveOuvrage = () => {
+    console.log(JSON.stringify(this.state.newOuvrage));
+  };
+
+  handleChange(event) {
+    let newOuvrage = Object.assign({}, this.state.newOuvrage);
+    console.log(event.target);
+    if (event.target.id === 'code-ouvrages') {
+      newOuvrage.codeOuvrages = event.target.value;
+    } else if (event.target.id === 'commentaire-ouvrage') {
+      newOuvrage.commentaire = event.target.value;
+    } else if (event.target.id === 'ouvrage-domaine') {
+      newOuvrage.domaines = event.target.value;
+    } else if (event.target.id === 'ouvrage-etage') {
+      newOuvrage.etage = event.target.value;
+    } else if (event.target.id === 'nombre-exemplaire') {
+      newOuvrage.nombreExemplaire = event.target.value;
+    } else if (event.target.id === 'ouvrage-ranger') {
+      newOuvrage.ranger = event.target.value;
+    } else if (event.target.id === 'titre-ouvrage') {
+      newOuvrage.titreOuvrages = event.target.value;
+    } 
+    this.setState({newOuvrage});
+  }
 
   render() {
     const viewStyle= {
@@ -106,6 +132,8 @@ class Ouvrages extends React.Component {
               label="Code ouvrage"
               type="number"
               margin="normal"
+              value={this.state.newOuvrage.codeOuvrages}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -114,6 +142,8 @@ class Ouvrages extends React.Component {
               placeholder="Commentaire"
               multiline
               margin="normal"
+              value={this.state.newOuvrage.commentaire}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -121,6 +151,8 @@ class Ouvrages extends React.Component {
               label="Domaine"
               placeholder="Domaine"
               margin="normal"
+              value={this.state.newOuvrage.domaines}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -128,6 +160,8 @@ class Ouvrages extends React.Component {
               label="Etage"
               type="number"
               margin="normal"
+              value={this.state.newOuvrage.etage}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -135,6 +169,8 @@ class Ouvrages extends React.Component {
               label="Nombre exemplaire"
               type="number"
               margin="normal"
+              value={this.state.newOuvrage.nombreExemplaire}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -142,6 +178,8 @@ class Ouvrages extends React.Component {
               label="Rangé"
               type="number"
               margin="normal"
+              value={this.state.newOuvrage.ranger}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -150,6 +188,8 @@ class Ouvrages extends React.Component {
               placeholder="titre ouvrage"
               multiline
               margin="normal"
+              value={this.state.newOuvrage.titreOuvrages}
+              onChange={this.handleChange.bind(this)}
             />
 
           </DialogContent>
@@ -157,7 +197,7 @@ class Ouvrages extends React.Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button color="primary">
+            <Button color="primary" onClick={this.saveOuvrage}>
               Save
             </Button>
           </DialogActions>

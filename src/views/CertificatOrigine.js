@@ -33,6 +33,7 @@ class CertificatOrigine extends React.Component {
       this.state = {
         valueList: [],
         isAddDrawerOpen: false,
+        newCertificatOrigine: {}
       };
   }
 
@@ -54,6 +55,39 @@ class CertificatOrigine extends React.Component {
   handleClose = () => {
     this.setState({ isAddDrawerOpen: false });
   };
+
+  saveCertificatOrigine = () => {
+    console.log(JSON.stringify(this.state.newCertificatOrigine));
+  };
+
+  handleChange(event) {
+    let newCertificatOrigine = Object.assign({}, this.state.newCertificatOrigine);
+    console.log(event.target);
+    if (event.target.id === 'co-numero') {
+      newCertificatOrigine.numero = event.target.value;
+    } else if (event.target.id === 'co-date') {
+      newCertificatOrigine.date = event.target.value;
+    } else if (event.target.id === 'co-nom-entreprise') {
+      newCertificatOrigine.nomEntreprise = event.target.value;
+    } else if (event.target.id === 'co-adresse') {
+      newCertificatOrigine.adresse = event.target.value;
+    } else if (event.target.id === 'co-destination') {
+      newCertificatOrigine.destination = event.target.value;
+    } else if (event.target.id === 'co-produit') {
+      newCertificatOrigine.produit = event.target.value;
+    } else if (event.target.id === 'co-quatite-export') {
+      newCertificatOrigine.quantiteExporte = event.target.value;
+    } else if (event.target.id === 'co-unite') {
+      newCertificatOrigine.unite = event.target.value;
+    } else if (event.target.id === 'co-nombre-conteneur') {
+      newCertificatOrigine.nombreConteneur = event.target.value;
+    } else if (event.target.id === 'co-prix_unitaire') {
+      newCertificatOrigine.prixUnitaire = event.target.value;
+    } else if (event.target.id === 'co-montant') {
+      newCertificatOrigine.montant = event.target.value;
+    }
+    this.setState({newCertificatOrigine});
+  }
 
   render() {
     const viewStyle= {
@@ -95,7 +129,7 @@ class CertificatOrigine extends React.Component {
                   <TableCell>{row.adresse}</TableCell>
                   <TableCell>{row.destination}</TableCell>
                   <TableCell>{row.produit}</TableCell>
-                  <TableCell>{row.quantiteExport}</TableCell>
+                  <TableCell>{row.quantiteExporte}</TableCell>
                   <TableCell>{row.unite}</TableCell>
                   <TableCell>{row.nombreConteneur}</TableCell>
                   <TableCell>{row.prixUnitaire}</TableCell>
@@ -115,6 +149,8 @@ class CertificatOrigine extends React.Component {
               label="Numéro"
               type="number"
               margin="normal"
+              value={this.state.newCertificatOrigine.numero}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -122,6 +158,8 @@ class CertificatOrigine extends React.Component {
               label="Date"
               type="date"
               margin="normal"
+              value={this.state.newCertificatOrigine.date}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -129,6 +167,8 @@ class CertificatOrigine extends React.Component {
               label="Nom entreprise"
               placeholder="Nom entreprise"
               margin="normal"
+              value={this.state.newCertificatOrigine.nomEntreprise}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -137,6 +177,8 @@ class CertificatOrigine extends React.Component {
               placeholder="Adresse"
               multiline
               margin="normal"
+              value={this.state.newCertificatOrigine.adresse}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -145,6 +187,8 @@ class CertificatOrigine extends React.Component {
               placeholder="Destination"
               multiline
               margin="normal"
+              value={this.state.newCertificatOrigine.destination}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -152,6 +196,8 @@ class CertificatOrigine extends React.Component {
               label="Produit"
               placeholder="Produit"
               margin="normal"
+              value={this.state.newCertificatOrigine.produit}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -159,6 +205,8 @@ class CertificatOrigine extends React.Component {
               label="Quantité exporté"
               type="number"
               margin="normal"
+              value={this.state.newCertificatOrigine.quantiteExporte}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -166,12 +214,17 @@ class CertificatOrigine extends React.Component {
               label="Unité"
               placeholder="Unité"
               margin="normal"
+              value={this.state.newCertificatOrigine.unite}
+              onChange={this.handleChange.bind(this)}
             />
+            <br/>
             <TextField
               id="co-nombre-conteneur"
               label="Nombre de conteneur"
               type="number"
               margin="normal"
+              value={this.state.newCertificatOrigine.nombreConteneur}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -179,6 +232,8 @@ class CertificatOrigine extends React.Component {
               label="Prix unitaire"
               placeholder="Prix unitaire"
               margin="normal"
+              value={this.state.newCertificatOrigine.prixUnitaire}
+              onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
@@ -186,6 +241,8 @@ class CertificatOrigine extends React.Component {
               label="Montant"
               type="number"
               margin="normal"
+              value={this.state.newCertificatOrigine.montant}
+              onChange={this.handleChange.bind(this)}
             />
 
 
@@ -194,7 +251,7 @@ class CertificatOrigine extends React.Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button color="primary">
+            <Button color="primary" onClick={this.saveCertificatOrigine}>
               Save
             </Button>
           </DialogActions>
