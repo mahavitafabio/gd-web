@@ -12,6 +12,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const paperStyle = {
   width: '100%',
@@ -25,18 +26,22 @@ const paperStyle = {
 const tableStyle = {
   backgroundColor: 'white'
 }
-
+const numSelected = 0;
+const rowCount = 0;
 class Entreprises extends React.Component {
+
 
   constructor(props) {
       super(props);
       this.state = {
         valueList: [],
         isAddDrawerOpen: false,
-        newEntreprise: {}
+        newEntreprise: {},
+        selected: [],
+        operation: 'POST',
+        enableEdit: false
       };
   }
-
   componentDidMount() {
     this.getEntrepriseList();
   }
@@ -47,7 +52,17 @@ class Entreprises extends React.Component {
     .then(items=>this.setState({valueList: items}));
   }
 
-  handleClickOpen = () => {
+  handleOpenNew = () => {
+    this.setState({ operation: 'POST' });
+    this.setState({ isAddDrawerOpen: true });
+    this.setState({newEntreprise:{}});
+  };
+
+  handleOpenEdit = () => {
+    let newEntreprise = this.state.valueList.find(o => o.entreprisesId === this.state.selected[0]);
+    console.log(JSON.stringify(newEntreprise));
+    this.setState({ newEntreprise });
+    this.setState({ operation: 'PUT' });
     this.setState({ isAddDrawerOpen: true });
   };
 
@@ -55,9 +70,23 @@ class Entreprises extends React.Component {
     this.setState({ isAddDrawerOpen: false });
   };
 
-
   saveEntreprise = () => {
+    let self = this;
     console.log(JSON.stringify(this.state.newEntreprise));
+    fetch('http://localhost:8080/enterprise', {
+      method: this.state.operation,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.state.newEntreprise)
+    }).then(function() {
+      self.getEntrepriseList();
+    }).catch(function (error) {
+      alert('We failed to save your record. Please try again later.');
+    });
+    this.handleClose();
+    this.setState({newEntreprise:{}});
   };
 
   handleChange(event) {
@@ -77,6 +106,33 @@ class Entreprises extends React.Component {
     this.setState({newEntreprise});
   }
 
+  handleClick = (event, id) => {
+    const { selected } = this.state;
+    const selectedIndex = selected.indexOf(id);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1),
+      );
+    }
+    if (newSelected && newSelected.length === 1) {
+      this.setState({ enableEdit: true });
+    } else {
+      this.setState({ enableEdit: false });
+    }
+    this.setState({ selected: newSelected });
+  };
+
+  isSelected = id => this.state.selected.indexOf(id) !== -1;
+
   render() {
     const viewStyle= {
         height: '100%',
@@ -85,11 +141,14 @@ class Entreprises extends React.Component {
 
     return (
       <div style={viewStyle}>
-        <ViewHeader addButtonHandler={this.handleClickOpen.bind(this)}/>
+        <ViewHeader addButtonHandler={this.handleOpenNew.bind(this)}
+          editButtonHandler={this.handleOpenEdit.bind(this)} enableEdit={this.state.enableEdit}/>
         <Paper style={paperStyle}>
         <Table style={tableStyle}>
           <TableHead>
             <TableRow>
+              <TableCell padding="checkbox">
+              </TableCell>
               <TableCell>Entreprise Id</TableCell>
               <TableCell>Nom Entreprise</TableCell>
               <TableCell>Adresse Enterprise</TableCell>
@@ -100,8 +159,18 @@ class Entreprises extends React.Component {
           </TableHead>
           <TableBody>
             {this.state.valueList.map(row => {
+              const isSelected = this.isSelected(row.entreprisesId);
               return (
-                <TableRow key={row.entreprisesId}>
+                <TableRow key={row.entreprisesId}
+                      hover
+                      onClick={event => this.handleClick(event, row.entreprisesId)}
+                      role="checkbox"
+                      aria-checked={isSelected}
+                      tabIndex={-1}
+                      selected={isSelected}>
+                  <TableCell padding="checkbox">
+                    <Checkbox checked={isSelected} />
+                  </TableCell>
                   <TableCell component="th" scope="row">
                     {row.entreprisesId}
                   </TableCell>
@@ -154,7 +223,7 @@ class Entreprises extends React.Component {
               label="Contact"
               type="number"
               margin="normal"
-              value={this.state.contact}
+              value={this.state.newEntreprise.contact}
               onChange={this.handleChange.bind(this)}
             />
             <br/>

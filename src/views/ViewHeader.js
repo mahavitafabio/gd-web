@@ -20,7 +20,8 @@ class ViewHeader extends React.Component {
 		        	<Ionicon icon="md-add" fontSize="15px" color="white"/>  
 		        	Ajouter
 		        </Button>
-		        <Button variant="contained" color="primary" style={buttonStyle}>
+		        <Button variant="contained" color="primary" style={buttonStyle}
+		        	onClick={this.props.editButtonHandler} disabled={!this.props.enableEdit}>
 		        	<Ionicon icon="md-brush" fontSize="15px" color="white"/>  
 		        	Modifier
 		        </Button>
@@ -42,6 +43,8 @@ class ViewHeader extends React.Component {
 }
 
 ViewHeader.propTypes = {
-	addButtonHandler: PropTypes.func
+	addButtonHandler: PropTypes.func,
+	editButtonHandler: PropTypes.func,
+	enableEdit: PropTypes.boolean
 };
 export default ViewHeader;
