@@ -25,7 +25,8 @@ class ViewHeader extends React.Component {
 		        	<Ionicon icon="md-brush" fontSize="15px" color="white"/>  
 		        	Modifier
 		        </Button>
-		        <Button variant="contained" color="primary" style={buttonStyle}>
+		        <Button variant="contained" color="primary" style={buttonStyle}
+		        	onClick={this.props.deleteButtonHandler}>
 		        	<Ionicon icon="md-trash" fontSize="15px" color="white"/>  
 		        	Supprimer
 		        </Button>
@@ -33,7 +34,8 @@ class ViewHeader extends React.Component {
 		        	<Ionicon icon="md-cloud-upload" fontSize="15px" color="white"/>  
 		        	Importer
 		        </Button>
-		        <Button variant="contained" color="primary" style={buttonStyle}>
+		        <Button variant="contained" color="primary" style={buttonStyle}
+		        	onClick={this.props.exportButtonHandler}>
 		        	<Ionicon icon="md-cloud-download" fontSize="15px" color="white"/>  
 		        	Exporter
 		        </Button>
@@ -49,6 +51,8 @@ class ViewHeader extends React.Component {
 ViewHeader.propTypes = {
 	addButtonHandler: PropTypes.func,
 	editButtonHandler: PropTypes.func,
-	enableEdit: PropTypes.boolean
+	deleteButtonHandler: PropTypes.func,
+	exportButtonHandler: PropTypes.func,
+	enableEdit: PropTypes.bool
 };
 export default ViewHeader;

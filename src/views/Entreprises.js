@@ -13,6 +13,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
+import FileSaver from 'file-saver';
+import moment from 'moment';
 
 const paperStyle = {
   width: '100%',
@@ -66,6 +68,24 @@ class Entreprises extends React.Component {
     this.setState({ isAddDrawerOpen: true });
   };
 
+  handleDelete = () => {
+    let self = this;
+    console.log(JSON.stringify(this.state.selected));
+    fetch('http://localhost:8080/enterprise', {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.state.selected)
+    }).then(function() {
+      self.getEntrepriseList();
+    }).catch(function (error) {
+      alert("Sauvegarde impossible! Veuiller verifier les informations introduitent et réessayer s'il vous plait.");
+    });
+    this.setState({selected:[]});
+  }
+
   handleClose = () => {
     this.setState({ isAddDrawerOpen: false });
   };
@@ -88,6 +108,16 @@ class Entreprises extends React.Component {
     this.handleClose();
     this.setState({newEntreprise:{}});
   };
+
+  exportEntreprise = () => {
+    fetch('http://localhost:8080/enterprise/export')
+    .then(result=> { return result.blob() })
+    .then(data=> {
+      let timeStamp = moment(new Date()).format('DDMMYY');
+      let blob = new Blob([data], { type: 'application/octet-stream' });
+      FileSaver.saveAs(blob, "Entreprises" + timeStamp + '.' + 'xlsx');
+    });
+  }
 
   handleChange(event) {
     let newEntreprise = Object.assign({}, this.state.newEntreprise);
@@ -142,7 +172,10 @@ class Entreprises extends React.Component {
     return (
       <div style={viewStyle}>
         <ViewHeader addButtonHandler={this.handleOpenNew.bind(this)}
-          editButtonHandler={this.handleOpenEdit.bind(this)} enableEdit={this.state.enableEdit}/>
+          editButtonHandler={this.handleOpenEdit.bind(this)}
+          enableEdit={this.state.enableEdit}
+          deleteButtonHandler={this.handleDelete.bind(this)}
+          exportButtonHandler={this.exportEntreprise.bind(this)}/>
         <Paper style={paperStyle}>
         <Table style={tableStyle}>
           <TableHead>
