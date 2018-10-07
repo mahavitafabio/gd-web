@@ -12,6 +12,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const paperStyle = {
   width: '100%',
@@ -25,7 +26,8 @@ const paperStyle = {
 const tableStyle = {
   backgroundColor: 'white'
 }
-
+const numSelected = 0;
+const rowCount = 0;
 class FichierConsulaires extends React.Component {
 
   constructor(props) {
@@ -33,7 +35,10 @@ class FichierConsulaires extends React.Component {
       this.state = {
         valueList: [],
         isAddDrawerOpen: false,
-        newFichierConsulaire: {}
+        newFichierConsulaire: {},
+        selected: [],
+        operation: 'POST',
+        enableEdit: false
       };
   }
 
@@ -48,7 +53,17 @@ class FichierConsulaires extends React.Component {
     .then(items=>this.setState({valueList: items}));
   }
   
-  handleClickOpen = () => {
+  handleOpenNew = () => {
+    this.setState({ operation: 'POST' });
+    this.setState({ isAddDrawerOpen: true });
+    this.setState({newFichierConsulaire:{}});
+  };
+
+  handleOpenEdit = () => {
+    let newFichierConsulaire = this.state.valueList.find(o => o.consulaireId === this.state.selected[0]);
+    console.log(JSON.stringify(newFichierConsulaire));
+    this.setState({ newFichierConsulaire });
+    this.setState({ operation: 'PUT' });
     this.setState({ isAddDrawerOpen: true });
   };
 
@@ -57,7 +72,22 @@ class FichierConsulaires extends React.Component {
   };
   
   saveFichierConsulaire = () => {
+    let self = this;
     console.log(JSON.stringify(this.state.newFichierConsulaire));
+    fetch('http://localhost:8080/fichier-consulaire', {
+      method: this.state.operation,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.state.newFichierConsulaire)
+    }).then(function() {
+      self.getFichierConsulaireList();
+    }).catch(function (error) {
+      alert("Sauvegarde impossible! Veuiller verifier les informations introduitent et réessayer s'il vous plait.");
+    });
+    this.handleClose();
+    this.setState({newFichierConsulaire:{}});
   };
   
   handleChange(event) {
@@ -89,6 +119,33 @@ class FichierConsulaires extends React.Component {
     this.setState({newFichierConsulaire});
   }
 
+  handleClick = (event, id) => {
+    const { selected } = this.state;
+    const selectedIndex = selected.indexOf(id);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1),
+      );
+    }
+    if (newSelected && newSelected.length === 1) {
+      this.setState({ enableEdit: true });
+    } else {
+      this.setState({ enableEdit: false });
+    }
+    this.setState({ selected: newSelected });
+  };
+
+  isSelected = id => this.state.selected.indexOf(id) !== -1;
+
   render() {
     const viewStyle= {
         height: '100%',
@@ -97,11 +154,14 @@ class FichierConsulaires extends React.Component {
 
     return (
       <div style={viewStyle}>
-        <ViewHeader addButtonHandler={this.handleClickOpen.bind(this)}/>
+        <ViewHeader addButtonHandler={this.handleOpenNew.bind(this)}
+        editButtonHandler={this.handleOpenEdit.bind(this)} enableEdit={this.state.enableEdit}/>
         <Paper style={paperStyle}>
         <Table style={tableStyle}>
           <TableHead>
             <TableRow>
+              <TableCell padding="checkbox">
+              </TableCell>
               <TableCell>Consulaire Id</TableCell>
               <TableCell>Raison social</TableCell>
               <TableCell>Adresse</TableCell>
@@ -119,8 +179,18 @@ class FichierConsulaires extends React.Component {
           </TableHead>
           <TableBody>
             {this.state.valueList.map(row => {
+              const isSelected = this.isSelected(row.consulaireId);
               return (
-                <TableRow key={row.consulaireId}>
+                <TableRow key={row.consulaireId}
+                      hover
+                      onClick={event => this.handleClick(event, row.consulaireId)}
+                      role="checkbox"
+                      aria-checked={isSelected}
+                      tabIndex={-1}
+                      selected={isSelected}>
+                  <TableCell padding="checkbox">
+                    <Checkbox checked={isSelected} />
+                  </TableCell>
                   <TableCell component="th" scope="row">
                     {row.consulaireId}
                   </TableCell>

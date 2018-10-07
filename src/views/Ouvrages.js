@@ -12,6 +12,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const paperStyle = {
   width: '100%',
@@ -25,7 +26,8 @@ const paperStyle = {
 const tableStyle = {
   backgroundColor: 'white'
 }
-
+const numSelected = 0;
+const rowCount = 0;
 class Ouvrages extends React.Component {
 
   constructor(props) {
@@ -33,7 +35,10 @@ class Ouvrages extends React.Component {
       this.state = {
         valueList: [],
         isAddDrawerOpen: false,
-        newOuvrage: {}
+        newOuvrage: {},
+        selected: [],
+        operation: 'POST',
+        enableEdit: false
       };
   }
 
@@ -47,7 +52,17 @@ class Ouvrages extends React.Component {
     .then(items=>this.setState({valueList: items}));
   }
 
-  handleClickOpen = () => {
+  handleOpenNew = () => {
+    this.setState({ operation: 'POST' });
+    this.setState({ isAddDrawerOpen: true });
+    this.setState({newOuvrage:{}});
+  };
+
+  handleOpenEdit = () => {
+    let newOuvrage = this.state.valueList.find(o => o.ouvrageId === this.state.selected[0]);
+    console.log(JSON.stringify(newOuvrage));
+    this.setState({ newOuvrage });
+    this.setState({ operation: 'PUT' });
     this.setState({ isAddDrawerOpen: true });
   };
 
@@ -56,7 +71,22 @@ class Ouvrages extends React.Component {
   };
   
   saveOuvrage = () => {
+    let self = this;
     console.log(JSON.stringify(this.state.newOuvrage));
+    fetch('http://localhost:8080/ouvrage', {
+      method: this.state.operation,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.state.newOuvrage)
+    }).then(function() {
+      self.getOuvrageList();
+    }).catch(function (error) {
+      alert("Sauvegarde impossible! Veuiller verifier les informations introduitent et réessayer s'il vous plait.");
+    });
+    this.handleClose();
+    this.setState({newOuvrage:{}});
   };
 
   handleChange(event) {
@@ -80,6 +110,33 @@ class Ouvrages extends React.Component {
     this.setState({newOuvrage});
   }
 
+  handleClick = (event, id) => {
+    const { selected } = this.state;
+    const selectedIndex = selected.indexOf(id);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1),
+      );
+    }
+    if (newSelected && newSelected.length === 1) {
+      this.setState({ enableEdit: true });
+    } else {
+      this.setState({ enableEdit: false });
+    }
+    this.setState({ selected: newSelected });
+  };
+
+  isSelected = id => this.state.selected.indexOf(id) !== -1;
+
   render() {
     const viewStyle= {
         height: '100%',
@@ -88,11 +145,14 @@ class Ouvrages extends React.Component {
 
     return (
       <div style={viewStyle}>
-        <ViewHeader addButtonHandler={this.handleClickOpen.bind(this)}/>
+        <ViewHeader addButtonHandler={this.handleOpenNew.bind(this)}
+        editButtonHandler={this.handleOpenEdit.bind(this)} enableEdit={this.state.enableEdit}/>
         <Paper style={paperStyle}>
         <Table style={tableStyle}>
           <TableHead>
             <TableRow>
+              <TableCell padding="checkbox">
+              </TableCell>
               <TableCell>Ouvrage Id</TableCell>
               <TableCell>Code ouvrage</TableCell>
               <TableCell>Commentaire</TableCell>
@@ -101,12 +161,23 @@ class Ouvrages extends React.Component {
               <TableCell>Nombre d'exemplaire</TableCell>
               <TableCell>Ranger</TableCell>
               <TableCell>Titre ouvrage</TableCell>
+
             </TableRow>
           </TableHead>
           <TableBody>
             {this.state.valueList.map(row => {
+              const isSelected = this.isSelected(row.ouvrageId);
               return (
-                <TableRow key={row.ouvrageId}>
+                <TableRow key={row.ouvrageId}
+                      hover
+                      onClick={event => this.handleClick(event, row.ouvrageId)}
+                      role="checkbox"
+                      aria-checked={isSelected}
+                      tabIndex={-1}
+                      selected={isSelected}>
+                  <TableCell padding="checkbox">
+                    <Checkbox checked={isSelected} />
+                  </TableCell>
                   <TableCell component="th" scope="row">
                     {row.ouvrageId}
                   </TableCell>
