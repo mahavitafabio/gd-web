@@ -41,7 +41,8 @@ class Entreprises extends React.Component {
         newEntreprise: {},
         selected: [],
         operation: 'POST',
-        enableEdit: false
+        enableEdit: false,
+        enableDelete: false
       };
   }
   componentDidMount() {
@@ -153,10 +154,20 @@ class Entreprises extends React.Component {
         selected.slice(selectedIndex + 1),
       );
     }
+
     if (newSelected && newSelected.length === 1) {
       this.setState({ enableEdit: true });
     } else {
       this.setState({ enableEdit: false });
+    }
+    this.setState({ selected: newSelected });
+
+    if (newSelected && newSelected.length === 1) {
+      this.setState({ enableDelete: true });
+    } else if (newSelected && newSelected.length === 0) {
+      this.setState({ enableDelete: false });
+    } else {
+      this.setState({ enableDelete: true });
     }
     this.setState({ selected: newSelected });
   };
@@ -175,6 +186,7 @@ class Entreprises extends React.Component {
           editButtonHandler={this.handleOpenEdit.bind(this)}
           enableEdit={this.state.enableEdit}
           deleteButtonHandler={this.handleDelete.bind(this)}
+          enableDelete={this.state.enableDelete}
           exportButtonHandler={this.exportEntreprise.bind(this)}/>
         <Paper style={paperStyle}>
         <Table style={tableStyle}>

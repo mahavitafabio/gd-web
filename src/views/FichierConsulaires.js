@@ -13,6 +13,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
+import FileSaver from 'file-saver';
+import moment from 'moment';
 
 const paperStyle = {
   width: '100%',
@@ -38,7 +40,8 @@ class FichierConsulaires extends React.Component {
         newFichierConsulaire: {},
         selected: [],
         operation: 'POST',
-        enableEdit: false
+        enableEdit: false,
+        enableDelete: false
       };
   }
 
@@ -67,6 +70,24 @@ class FichierConsulaires extends React.Component {
     this.setState({ isAddDrawerOpen: true });
   };
 
+  handleDelete = () => {
+    let self = this;
+    console.log(JSON.stringify(this.state.selected));
+    fetch('http://localhost:8080/fichier-consulaire', {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.state.selected)
+    }).then(function() {
+      self.getFichierConsulaireList();
+    }).catch(function (error) {
+      alert("Erreur! Veuiller verifier et réessayer s'il vous plait.");
+    });
+    this.setState({selected:[]});
+  }
+
   handleClose = () => {
     this.setState({ isAddDrawerOpen: false });
   };
@@ -89,6 +110,16 @@ class FichierConsulaires extends React.Component {
     this.handleClose();
     this.setState({newFichierConsulaire:{}});
   };
+
+  exportFichierConsulaire = () => {
+    fetch('http://localhost:8080/fichier-consulaire/export')
+    .then(result=> { return result.blob() })
+    .then(data=> {
+      let timeStamp = moment(new Date()).format('DDMMYY');
+      let blob = new Blob([data], { type: 'application/octet-stream' });
+      FileSaver.saveAs(blob, "FichierConsulaires" + timeStamp + '.' + 'xlsx');
+    });
+  }
   
   handleChange(event) {
     let newFichierConsulaire = Object.assign({}, this.state.newFichierConsulaire);
@@ -142,6 +173,15 @@ class FichierConsulaires extends React.Component {
       this.setState({ enableEdit: false });
     }
     this.setState({ selected: newSelected });
+
+    if (newSelected && newSelected.length === 1) {
+      this.setState({ enableDelete: true });
+    } else if (newSelected && newSelected.length === 0) {
+      this.setState({ enableDelete: false });
+    } else {
+      this.setState({ enableDelete: true });
+    }
+    this.setState({ selected: newSelected });
   };
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
@@ -155,7 +195,11 @@ class FichierConsulaires extends React.Component {
     return (
       <div style={viewStyle}>
         <ViewHeader addButtonHandler={this.handleOpenNew.bind(this)}
-        editButtonHandler={this.handleOpenEdit.bind(this)} enableEdit={this.state.enableEdit}/>
+        editButtonHandler={this.handleOpenEdit.bind(this)} 
+        enableEdit={this.state.enableEdit}
+        deleteButtonHandler={this.handleDelete.bind(this)}
+        enableDelete={this.state.enableDelete}
+        exportButtonHandler={this.exportFichierConsulaire.bind(this)}/>
         <Paper style={paperStyle}>
         <Table style={tableStyle}>
           <TableHead>

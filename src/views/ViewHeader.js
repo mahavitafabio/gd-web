@@ -26,23 +26,19 @@ class ViewHeader extends React.Component {
 		        	Modifier
 		        </Button>
 		        <Button variant="contained" color="primary" style={buttonStyle}
-		        	onClick={this.props.deleteButtonHandler}>
+		        	onClick={this.props.deleteButtonHandler} disabled={!this.props.enableDelete}>
 		        	<Ionicon icon="md-trash" fontSize="15px" color="white"/>  
 		        	Supprimer
 		        </Button>
 		        <Button variant="contained" color="primary" style={buttonStyle}>
-		        	<Ionicon icon="md-cloud-upload" fontSize="15px" color="white"/>  
+		        	<Ionicon icon="md-cloud-download" fontSize="15px" color="white"/>  
 		        	Importer
 		        </Button>
 		        <Button variant="contained" color="primary" style={buttonStyle}
 		        	onClick={this.props.exportButtonHandler}>
-		        	<Ionicon icon="md-cloud-download" fontSize="15px" color="white"/>  
+		        	<Ionicon icon="md-cloud-upload" fontSize="15px" color="white"/>  
 		        	Exporter
 		        </Button>
-		        <Button variant="contained" color="primary" style={buttonStyle}>  
-		        	<Ionicon icon="md-print" fontSize="15px" color="white"/>
-		        	Imprimer
-		      	</Button>
 	       </div>
 	    );
 	}
@@ -53,6 +49,7 @@ ViewHeader.propTypes = {
 	editButtonHandler: PropTypes.func,
 	deleteButtonHandler: PropTypes.func,
 	exportButtonHandler: PropTypes.func,
-	enableEdit: PropTypes.bool
+	enableEdit: PropTypes.bool,
+	enableDelete: PropTypes.bool
 };
 export default ViewHeader;
