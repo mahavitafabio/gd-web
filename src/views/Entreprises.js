@@ -137,6 +137,24 @@ class Entreprises extends React.Component {
     this.setState({newEntreprise});
   }
 
+  handleChangeFile(event) {
+    const file = event.target.files[0];
+    console.log(event.target.files[0]);
+    fetch('http://localhost:8080/enterprise/upload', { // Your POST endpoint
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/octet-stream"
+      },
+      body: file // This is your file object
+    }).then(
+      response => response.json() // if the response is a JSON object
+    ).then(
+      success => console.log(success) // Handle the success response object
+    ).catch(
+      error => console.log(error) // Handle the error response object
+    );
+  }
+
   handleClick = (event, id) => {
     const { selected } = this.state;
     const selectedIndex = selected.indexOf(id);
@@ -187,7 +205,8 @@ class Entreprises extends React.Component {
           enableEdit={this.state.enableEdit}
           deleteButtonHandler={this.handleDelete.bind(this)}
           enableDelete={this.state.enableDelete}
-          exportButtonHandler={this.exportEntreprise.bind(this)}/>
+          exportButtonHandler={this.exportEntreprise.bind(this)}
+          changeFileHandler={this.handleChangeFile.bind(this)}/>
         <Paper style={paperStyle}>
         <Table style={tableStyle}>
           <TableHead>
