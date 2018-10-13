@@ -138,21 +138,19 @@ class Entreprises extends React.Component {
   }
 
   handleChangeFile(event) {
+    const self = this;
     const file = event.target.files[0];
     console.log(event.target.files[0]);
+    var data = new FormData();
+    data.append("data", file);
     fetch('http://localhost:8080/enterprise/upload', { // Your POST endpoint
       method: 'POST',
-      headers: {
-        "Content-Type": "application/octet-stream"
-      },
-      body: file // This is your file object
-    }).then(
-      response => response.json() // if the response is a JSON object
-    ).then(
-      success => console.log(success) // Handle the success response object
-    ).catch(
-      error => console.log(error) // Handle the error response object
-    );
+      body: data // This is your file object
+    }).then(function() {
+      self.getEntrepriseList();
+    }).catch(function (error) {
+      alert("Sauvegarde impossible! Veuiller verifier les informations introduitent et réessayer s'il vous plait.");
+    });
   }
 
   handleClick = (event, id) => {

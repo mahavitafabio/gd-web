@@ -11,11 +11,6 @@ class ViewHeader extends React.Component {
 
   	constructor(props) {
     	super(props);
-    	this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleChange(files) {
-    	this.props.changeFileHandler(files) ;
     }
 
 	render() {
