@@ -5,12 +5,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Input from '@material-ui/core/Input';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import AppMenuNew from './AppMenuNew';
 
 
-const styles = theme => ({
+const classes = {
   root: {
     width: '100%',
   },
@@ -22,27 +21,20 @@ const styles = theme => ({
     marginRight: 20,
   },
   title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
+    display: 'block',
   },
   search: {
     position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    borderRadius: '3px',
+    backgroundColor: fade('#FFF', 0.15),
     '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: fade('#FFF', 0.25),
     },
     marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing.unit,
-      width: 'auto',
-    },
+    width: '20%'
   },
   searchIcon: {
-    width: theme.spacing.unit * 9,
+    width: '30px',
     height: '100%',
     position: 'absolute',
     pointerEvents: 'none',
@@ -50,59 +42,55 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  inputRoot: {
-    color: 'inherit',
-    width: '100%',
-  },
   inputInput: {
-    paddingTop: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 10,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: 120,
-      '&:focus': {
-        width: 200,
-      },
-    },
+    paddingTop: '1px',
+    paddingRight: '1px',
+    paddingBottom: '1px',
+    paddingLeft: '10px',
+    width: '80%',
+    color: 'inherit'
   },
-});
+};
 
-function SearchAppBar(props) {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <AppMenuNew>
-          </AppMenuNew>
-          <Typography className={classes.title} variant="title" color="inherit" noWrap>
-            Gestion Documentaire
-          </Typography>
-          <div className={classes.grow} />
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+class SearchAppBar extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <div style={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <AppMenuNew>
+            </AppMenuNew>
+            <Typography style={classes.title} variant="title" color="inherit" noWrap>
+              {this.props.header}
+            </Typography>
+            <div style={classes.grow} />
+            <div style={classes.search}>
+              <div style={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <Input
+                placeholder="Search…"
+                disableUnderline
+                style={classes.inputInput}
+                onChange={this.props.onSearch}
+                value={this.props.searchString}
+                autoFocus
+              />
             </div>
-            <Input
-              placeholder="Search…"
-              disableUnderline
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-            />
-          </div>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  }
 }
 
 SearchAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
+  header: PropTypes.string.isRequired,
+  onSearch: PropTypes.func.isRequired,
+  searchString: PropTypes.string
 };
 
-export default withStyles(styles)(SearchAppBar);
+export default SearchAppBar;

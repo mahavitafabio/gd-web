@@ -55,13 +55,13 @@ class AppMenuNew extends React.Component {
         </ListItem>
         <ListItem button>
           <Link to={`/fichier-consulaires`} >
-            <ListItemText primary="Fichier consulaires" />
+            <ListItemText primary="Fichier Consulaires" />
           </Link>
         </ListItem>
         <Divider light />
         <ListItem button>
           <Link to={`/certificat`} >
-            <ListItemText primary="Certificat origine" />
+            <ListItemText primary="Certificat Origine" />
           </Link>
         </ListItem>
       </List>

@@ -15,6 +15,7 @@ import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import FileSaver from 'file-saver';
 import moment from 'moment';
+import PropTypes, { instanceOf } from 'prop-types';
 
 const paperStyle = {
   width: '100%',
@@ -44,13 +45,16 @@ class Entreprises extends React.Component {
         enableEdit: false,
         enableDelete: false
       };
+      if (props.searchString) {
+        console.log(props.searchString);
+      }
   }
   componentDidMount() {
-    this.getEntrepriseList();
+    this.getEntrepriseList(this.props.searchString);
   }
 
-  getEntrepriseList() {
-    fetch('http://localhost:8080/enterprise')
+  getEntrepriseList(q) {
+    fetch('http://localhost:8080/enterprise?q=' + q)
     .then(result=>result.json())
     .then(items=>this.setState({valueList: items}));
   }
@@ -312,4 +316,8 @@ class Entreprises extends React.Component {
     );
   }
 }
+
+Entreprises.propTypes = {
+  searchString: PropTypes.string
+};
 export default Entreprises;
