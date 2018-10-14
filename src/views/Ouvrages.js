@@ -142,6 +142,22 @@ class Ouvrages extends React.Component {
     this.setState({newOuvrage});
   }
 
+  handleChangeFile(event) {
+    const self = this;
+    const file = event.target.files[0];
+    console.log(event.target.files[0]);
+    var data = new FormData();
+    data.append("data", file);
+    fetch('http://localhost:8080/ouvrage/upload', { // Your POST endpoint
+      method: 'POST',
+      body: data // This is your file object
+    }).then(function() {
+      self.getOuvrageList();
+    }).catch(function (error) {
+      alert("Erreur! Veuiller réessayer s'il vous plait.");
+    });
+  }
+
   handleClick = (event, id) => {
     const { selected } = this.state;
     const selectedIndex = selected.indexOf(id);
@@ -191,7 +207,8 @@ class Ouvrages extends React.Component {
         enableEdit={this.state.enableEdit}
         deleteButtonHandler={this.handleDelete.bind(this)}
         enableDelete={this.state.enableDelete}
-        exportButtonHandler={this.exportOuvrage.bind(this)}/>
+        exportButtonHandler={this.exportOuvrage.bind(this)}
+        changeFileHandler={this.handleChangeFile.bind(this)}/>
         <Paper style={paperStyle}>
         <Table style={tableStyle}>
           <TableHead>

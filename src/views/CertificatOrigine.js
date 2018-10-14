@@ -150,6 +150,22 @@ class CertificatOrigine extends React.Component {
     this.setState({newCertificatOrigine});
   }
 
+  handleChangeFile(event) {
+    const self = this;
+    const file = event.target.files[0];
+    console.log(event.target.files[0]);
+    var data = new FormData();
+    data.append("data", file);
+    fetch('http://localhost:8080/certificat/upload', { // Your POST endpoint
+      method: 'POST',
+      body: data // This is your file object
+    }).then(function() {
+      self.getCoList();
+    }).catch(function (error) {
+      alert("Erreur! Veuiller réessayer s'il vous plait.");
+    });
+  }
+
   handleClick = (event, id) => {
     const { selected } = this.state;
     const selectedIndex = selected.indexOf(id);
@@ -199,7 +215,8 @@ class CertificatOrigine extends React.Component {
         enableEdit={this.state.enableEdit}
         deleteButtonHandler={this.handleDelete.bind(this)}
         enableDelete={this.state.enableDelete}
-        exportButtonHandler={this.exportCertificatOrigine.bind(this)}/>
+        exportButtonHandler={this.exportCertificatOrigine.bind(this)}
+        changeFileHandler={this.handleChangeFile.bind(this)}/>
         <Paper style={paperStyle}>
         <Table style={tableStyle}>
           <TableHead>

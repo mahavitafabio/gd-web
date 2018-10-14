@@ -149,7 +149,7 @@ class Entreprises extends React.Component {
     }).then(function() {
       self.getEntrepriseList();
     }).catch(function (error) {
-      alert("Sauvegarde impossible! Veuiller verifier les informations introduitent et réessayer s'il vous plait.");
+      alert("Erreur! Veuiller réessayer s'il vous plait.");
     });
   }
 
