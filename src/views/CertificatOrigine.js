@@ -15,6 +15,7 @@ import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import FileSaver from 'file-saver';
 import moment from 'moment';
+import PropTypes, { instanceOf } from 'prop-types';
 
 const paperStyle = {
   width: '100%',
@@ -43,15 +44,18 @@ class CertificatOrigine extends React.Component {
         enableEdit: false,
         enableDelete: false
       };
+      if (props.searchString) {
+        console.log(props.searchString);
+        }
   }
 
 
   componentDidMount() {
-    this.getCoList();
+    this.getCoList(this.props.searchString);
   }
 
-  getCoList() {
-    fetch('http://localhost:8080/certificat')
+  getCoList(q) {
+    fetch('http://localhost:8080/certificat?q=' + q)
     .then(result=>result.json())
     .then(items=>this.setState({valueList: items}));
   }
@@ -391,4 +395,8 @@ class CertificatOrigine extends React.Component {
     );
   }
 }
+
+CertificatOrigine.propTypes = {
+  searchString: PropTypes.string
+};
 export default CertificatOrigine;

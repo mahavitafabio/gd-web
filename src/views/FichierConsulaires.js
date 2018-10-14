@@ -15,6 +15,7 @@ import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import FileSaver from 'file-saver';
 import moment from 'moment';
+import PropTypes, { instanceOf } from 'prop-types';
 
 const paperStyle = {
   width: '100%',
@@ -43,15 +44,18 @@ class FichierConsulaires extends React.Component {
         enableEdit: false,
         enableDelete: false
       };
+      if (props.searchString) {
+        console.log(props.searchString);
+        }
   }
 
 
   componentDidMount() {
-    this.getFichierConsulaireList();
+    this.getFichierConsulaireList(this.props.searchString);
   }
 
-  getFichierConsulaireList() {
-    fetch('http://localhost:8080/fichier-consulaire')
+  getFichierConsulaireList(q) {
+    fetch('http://localhost:8080/fichier-consulaire?q=' + q)
     .then(result=>result.json())
     .then(items=>this.setState({valueList: items}));
   }
@@ -392,4 +396,8 @@ class FichierConsulaires extends React.Component {
     );
   }
 }
+
+FichierConsulaires.propTypes = {
+  searchString: PropTypes.string
+};
 export default FichierConsulaires;

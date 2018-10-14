@@ -31,23 +31,23 @@ class App extends Component {
       },
       {
         path: "/entreprises",
-        toolbar: () => <SearchAppBar header="Entreprises"/>,
-        main: () => <Entreprises />
+        toolbar: () => <SearchAppBar header="Entreprises" onSearch={this.onSearch.bind(this)} searchString={this.state.searchString}/>,
+        main: () => <Entreprises searchString={this.state.searchString} />
       },
       {
         path: "/fichier-consulaires",
-        toolbar: () => <SearchAppBar header="Fichier Consulaires"/>,
-        main: () => <FichierConsulaires />
+        toolbar: () => <SearchAppBar header="Fichier Consulaires" onSearch={this.onSearch.bind(this)} searchString={this.state.searchString}/>,
+        main: () => <FichierConsulaires searchString={this.state.searchString} />
       },
       {
         path: "/ouvrages",
-        toolbar: () => <SearchAppBar header="Ouvrages"/>,
-        main: () => <Ouvrages />
+        toolbar: () => <SearchAppBar header="Ouvrages" onSearch={this.onSearch.bind(this)} searchString={this.state.searchString}/>,
+        main: () => <Ouvrages searchString={this.state.searchString} />
       },
       {
         path: "/certificat",
-        toolbar: () => <SearchAppBar header="Certificat Origine"/>,
-        main: () => <CertificatOrigine />
+        toolbar: () => <SearchAppBar header="Certificat Origine" onSearch={this.onSearch.bind(this)} searchString={this.state.searchString}/>,
+        main: () => <CertificatOrigine searchString={this.state.searchString} />
       }
     ];
     return (

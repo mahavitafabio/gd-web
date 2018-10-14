@@ -15,6 +15,7 @@ import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import FileSaver from 'file-saver';
 import moment from 'moment';
+import PropTypes, { instanceOf } from 'prop-types';
 
 
 const paperStyle = {
@@ -44,14 +45,17 @@ class Ouvrages extends React.Component {
         enableEdit: false,
         enableDelete: false
       };
+      if (props.searchString) {
+        console.log(props.searchString);
+        }
   }
 
   componentDidMount() {
-    this.getOuvrageList();
+    this.getOuvrageList(this.props.searchString);
   }
 
-  getOuvrageList() {
-    fetch('http://localhost:8080/ouvrage')
+  getOuvrageList(q) {
+    fetch('http://localhost:8080/ouvrage?q=' + q)
     .then(result=>result.json())
     .then(items=>this.setState({valueList: items}));
   }
@@ -339,4 +343,8 @@ class Ouvrages extends React.Component {
     );
   }
 }
+
+Ouvrages.propTypes = {
+  searchString: PropTypes.string
+};
 export default Ouvrages;
