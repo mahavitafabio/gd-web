@@ -7,12 +7,6 @@ const buttonStyle= {
     marginLeft: '40px'
 };
 
-const inputStyle= {
-    marginLeft: '40px',
-    fontSize: '15px',
-    color: 'primary'
-
-};
 
 class ViewHeader extends React.Component {
 
@@ -37,8 +31,7 @@ class ViewHeader extends React.Component {
 		        	<Ionicon icon="md-trash" fontSize="15px" color="white"/>  
 		        	Supprimer
 		        </Button>
-		        <input type="file" onChange={this.props.changeFileHandler} style={inputStyle}/>
-		        <Button variant="contained" color="primary" style={buttonStyle}>
+		        <Button variant="contained" color="primary" style={buttonStyle} onClick={this.props.openHandler}>
 		        	<Ionicon icon="md-cloud-download" fontSize="15px" color="white"/>  
 		        	Importer
 		        </Button>
@@ -57,8 +50,8 @@ ViewHeader.propTypes = {
 	editButtonHandler: PropTypes.func,
 	deleteButtonHandler: PropTypes.func,
 	exportButtonHandler: PropTypes.func,
-	changeFileHandler: PropTypes.func,
 	enableEdit: PropTypes.bool,
-	enableDelete: PropTypes.bool
+	enableDelete: PropTypes.bool,
+	openHandler: PropTypes.bool
 };
 export default ViewHeader;

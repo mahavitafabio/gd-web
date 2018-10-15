@@ -43,7 +43,8 @@ class Entreprises extends React.Component {
         selected: [],
         operation: 'POST',
         enableEdit: false,
-        enableDelete: false
+        enableDelete: false,
+        isDrawerOpen: false
       };
       if (props.searchString) {
         console.log(props.searchString);
@@ -93,6 +94,16 @@ class Entreprises extends React.Component {
 
   handleClose = () => {
     this.setState({ isAddDrawerOpen: false });
+  };
+
+  handleOpen = () => {
+    let self = this;
+    this.setState({ isDrawerOpen: true });
+    this.handleClose();
+  };
+
+  handleCloseNew = () => {
+    this.setState({ isDrawerOpen: false });
   };
 
   saveEntreprise = () => {
@@ -208,7 +219,7 @@ class Entreprises extends React.Component {
           deleteButtonHandler={this.handleDelete.bind(this)}
           enableDelete={this.state.enableDelete}
           exportButtonHandler={this.exportEntreprise.bind(this)}
-          changeFileHandler={this.handleChangeFile.bind(this)}/>
+          openHandler={this.handleOpen.bind(this)}/>
         <Paper style={paperStyle}>
         <Table style={tableStyle}>
           <TableHead>
@@ -309,6 +320,16 @@ class Entreprises extends React.Component {
             </Button>
             <Button color="primary" onClick={this.saveEntreprise}>
               Save
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog open={this.state.isDrawerOpen} aria-labelledby="simple-dialog-title">
+          <DialogContent>
+             <input type="file" onChange={this.handleChangeFile.bind(this)}/>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseNew} color="primary">
+              Cancel
             </Button>
           </DialogActions>
         </Dialog>
