@@ -87,7 +87,7 @@ class Entreprises extends React.Component {
     }).then(function() {
       self.getEntrepriseList();
     }).catch(function (error) {
-      alert("Sauvegarde impossible! Veuiller verifier les informations introduitent et réessayer s'il vous plait.");
+      alert("Suppression impossible! Veuiller verifier les informations et réessayer s'il vous plait.");
     });
     this.setState({selected:[]});
   }
@@ -164,7 +164,7 @@ class Entreprises extends React.Component {
     }).then(function() {
       self.getEntrepriseList();
     }).catch(function (error) {
-      alert("Erreur! Veuiller réessayer s'il vous plait.");
+      alert("Erreur! Veuiller verifier le fichier et réessayer, s'il vous plait!");
     });
   }
 
