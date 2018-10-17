@@ -55,6 +55,9 @@ class Entreprises extends React.Component {
   }
 
   getEntrepriseList(q) {
+    if (typeof(q) == "undefined") {
+      q = '';
+    }
     fetch('http://localhost:8080/enterprise?q=' + q)
     .then(result=>result.json())
     .then(items=>this.setState({valueList: items}));
