@@ -56,6 +56,9 @@ class Ouvrages extends React.Component {
   }
 
   getOuvrageList(q) {
+    if (typeof(q) == "undefined") {
+      q = '';
+    }
     fetch('http://localhost:8080/ouvrage?q=' + q)
     .then(result=>result.json())
     .then(items=>this.setState({valueList: items}));
@@ -238,7 +241,6 @@ class Ouvrages extends React.Component {
               <TableCell>Nombre d'exemplaire</TableCell>
               <TableCell>Ranger</TableCell>
               <TableCell>Titre ouvrage</TableCell>
-
             </TableRow>
           </TableHead>
           <TableBody>

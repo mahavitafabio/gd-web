@@ -56,6 +56,9 @@ class FichierConsulaires extends React.Component {
   }
 
   getFichierConsulaireList(q) {
+    if (typeof(q) == "undefined") {
+      q = '';
+    }
     fetch('http://localhost:8080/fichier-consulaire?q=' + q)
     .then(result=>result.json())
     .then(items=>this.setState({valueList: items}));
