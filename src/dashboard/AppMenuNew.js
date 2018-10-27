@@ -13,6 +13,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Collapse from '@material-ui/core/Collapse';
 
 const styles = {
   list: {
@@ -31,6 +32,10 @@ class AppMenuNew extends React.Component {
     right: false,
   };
 
+  handleClick = () => {
+    this.setState(state => ({ open: !state.open }));
+  };
+
   toggleDrawer = (side, open) => () => {
     this.setState({
       [side]: open,
@@ -42,11 +47,29 @@ class AppMenuNew extends React.Component {
 
     const sideList = (
       <List component="nav">
-        <ListItem button>
-          <Link to={`/entreprises`} >
+        <ListItem button onClick={this.handleClick}>
             <ListItemText primary="Entreprises" />
-          </Link>
-        </ListItem>
+            </ListItem>
+              <Collapse in={this.state.open} timeout="auto">
+                  <List component="nav" disablePadding>
+                    <ListItem button>
+                      <Link to={`/entreprises`} >
+                        <ListItemText primary="Industries" />
+                      </Link>
+                    </ListItem>
+                    <Divider />
+                    <ListItem button divider>
+                      <Link to={`/services`} >
+                        <ListItemText primary="Services" />
+                      </Link>
+                    </ListItem>
+                    <ListItem button>
+                      <Link to={`/commerces`} >
+                        <ListItemText primary="Commerces" />
+                      </Link>
+                    </ListItem>
+                  </List>
+              </Collapse>
         <Divider />
         <ListItem button divider>
           <Link to={`/ouvrages`} >

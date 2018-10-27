@@ -17,7 +17,6 @@ import FileSaver from 'file-saver';
 import moment from 'moment';
 import PropTypes, { instanceOf } from 'prop-types';
 
-
 const paperStyle = {
   width: '100%',
   marginTop: '5px',
@@ -32,14 +31,14 @@ const tableStyle = {
 }
 const numSelected = 0;
 const rowCount = 0;
-class Guide extends React.Component {
+class Co2017 extends React.Component {
 
   constructor(props) {
       super(props);
       this.state = {
         valueList: [],
         isAddDrawerOpen: false,
-        newGuide: {},
+        newCo2017: {},
         selected: [],
         operation: 'POST',
         enableEdit: false,
@@ -51,29 +50,30 @@ class Guide extends React.Component {
         }
   }
 
+
   componentDidMount() {
-    this.getGuideList(this.props.searchString);
+    this.getCo2017List(this.props.searchString);
   }
 
-  getGuideList(q) {
+  getCo2017List(q) {
     if (typeof(q) == "undefined") {
       q = '';
     }
-    fetch('http://localhost:8080/guide?q=' + q)
+    fetch('http://localhost:8080/certificat17?q=' + q)
     .then(result=>result.json())
     .then(items=>this.setState({valueList: items}));
   }
-
+  
   handleOpenNew = () => {
     this.setState({ operation: 'POST' });
     this.setState({ isAddDrawerOpen: true });
-    this.setState({newGuide:{}});
+    this.setState({newCo2017:{}});
   };
 
   handleOpenEdit = () => {
-    let newGuide = this.state.valueList.find(o => o.guideId === this.state.selected[0]);
-    console.log(JSON.stringify(newGuide));
-    this.setState({ newGuide });
+    let newCo2017 = this.state.valueList.find(o => o.co2017Id === this.state.selected[0]);
+    console.log(JSON.stringify(newCo2017));
+    this.setState({ newCo2017 });
     this.setState({ operation: 'PUT' });
     this.setState({ isAddDrawerOpen: true });
   };
@@ -81,7 +81,7 @@ class Guide extends React.Component {
   handleDelete = () => {
     let self = this;
     console.log(JSON.stringify(this.state.selected));
-    fetch('http://localhost:8080/guide', {
+    fetch('http://localhost:8080/certificat17', {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',
@@ -89,7 +89,7 @@ class Guide extends React.Component {
       },
       body: JSON.stringify(this.state.selected)
     }).then(function() {
-      self.getGuideList();
+      self.getCo2017List();
     }).catch(function (error) {
       alert("Erreur! Veuiller verifier et réessayer s'il vous plait.");
     });
@@ -109,55 +109,63 @@ class Guide extends React.Component {
   handleCloseNew = () => {
     this.setState({ isDrawerOpen: false });
   };
-  
-  saveGuide = () => {
+
+  saveCo2017 = () => {
     let self = this;
-    console.log(JSON.stringify(this.state.newGuide));
-    fetch('http://localhost:8080/guide', {
+    console.log(JSON.stringify(this.state.newCo2017));
+    fetch('http://localhost:8080/certificat17', {
       method: this.state.operation,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(this.state.newGuide)
+      body: JSON.stringify(this.state.newCo2017)
     }).then(function() {
-      self.getGuideList();
+      self.getCo2017List();
     }).catch(function (error) {
       alert("Sauvegarde impossible! Veuiller verifier les informations introduitent et réessayer s'il vous plait.");
     });
     this.handleClose();
-    this.setState({newGuide:{}});
+    this.setState({newCo2017:{}});
   };
 
-  exportGuide = () => {
-    fetch('http://localhost:8080/guide/export')
+  exportCo2017 = () => {
+    fetch('http://localhost:8080/certificat17/export')
     .then(result=> { return result.blob() })
     .then(data=> {
       let timeStamp = moment(new Date()).format('DDMMYY');
       let blob = new Blob([data], { type: 'application/octet-stream' });
-      FileSaver.saveAs(blob, "Guides" + timeStamp + '.' + 'xlsx');
+      FileSaver.saveAs(blob, "Co2017" + timeStamp + '.' + 'xlsx');
     });
   }
 
   handleChange(event) {
-    let newGuide = Object.assign({}, this.state.newGuide);
+    let newCo2017 = Object.assign({}, this.state.newCo2017);
     console.log(event.target);
-    if (event.target.id === 'code-guide') {
-      newGuide.codeOuvrages = event.target.value;
-    } else if (event.target.id === 'commentaire-guide') {
-      newGuide.commentaire = event.target.value;
-    } else if (event.target.id === 'guide-domaine') {
-      newGuide.domaines = event.target.value;
-    } else if (event.target.id === 'guide-etage') {
-      newGuide.etage = event.target.value;
-    } else if (event.target.id === 'guide-nombre-exemplaire') {
-      newGuide.nombreExemplaire = event.target.value;
-    } else if (event.target.id === 'guide-ranger') {
-      newGuide.ranger = event.target.value;
-    } else if (event.target.id === 'titre-guide') {
-      newGuide.titreOuvrages = event.target.value;
-    } 
-    this.setState({newGuide});
+    if (event.target.id === 'co2017-numero') {
+      newCo2017.numero = event.target.value;
+    } else if (event.target.id === 'co2017-date') {
+      newCo2017.date = event.target.value;
+    } else if (event.target.id === 'co2017-nom-entreprise') {
+      newCo2017.nomEntreprise = event.target.value;
+    } else if (event.target.id === 'co2017-adresse') {
+      newCo2017.adresse = event.target.value;
+    } else if (event.target.id === 'co2017-destination') {
+      newCo2017.destination = event.target.value;
+    } else if (event.target.id === 'co2017-produit') {
+      newCo2017.produit = event.target.value;
+    } else if (event.target.id === 'co2017-quatite-export') {
+      newCo2017.quantiteExporte = event.target.value;
+    } else if (event.target.id === 'co2017-unite') {
+      newCo2017.unite = event.target.value;
+    } else if (event.target.id === 'co2017-nombre-conteneur') {
+      newCo2017.nombreConteneur = event.target.value;
+    } else if (event.target.id === 'co2017-prix_unitaire') {
+      newCo2017.prixUnitaire = event.target.value;
+    } else if (event.target.id === 'co2017-montant') {
+      newCo2017.montant = event.target.value;
+    }
+    this.setState({newCo2017});
   }
 
   handleChangeFile(event) {
@@ -166,11 +174,11 @@ class Guide extends React.Component {
     console.log(event.target.files[0]);
     var data = new FormData();
     data.append("data", file);
-    fetch('http://localhost:8080/guide/upload', { // Your POST endpoint
+    fetch('http://localhost:8080/certificat17/upload', { // Your POST endpoint
       method: 'POST',
       body: data // This is your file object
     }).then(function() {
-      self.getGuideList();
+      self.getCo2017List();
     }).catch(function (error) {
       alert("Erreur! Veuiller réessayer s'il vous plait.");
     });
@@ -225,7 +233,7 @@ class Guide extends React.Component {
         enableEdit={this.state.enableEdit}
         deleteButtonHandler={this.handleDelete.bind(this)}
         enableDelete={this.state.enableDelete}
-        exportButtonHandler={this.exportGuide.bind(this)}
+        exportButtonHandler={this.exportCo2017.bind(this)}
         openHandler={this.handleOpen.bind(this)}/>
         <Paper style={paperStyle}>
         <Table style={tableStyle}>
@@ -233,23 +241,27 @@ class Guide extends React.Component {
             <TableRow>
               <TableCell padding="checkbox">
               </TableCell>
-              <TableCell>Guide Id</TableCell>
-              <TableCell>Code ouvrage</TableCell>
-              <TableCell>Commentaire</TableCell>
-              <TableCell>Domaine</TableCell>
-              <TableCell>Etage</TableCell>
-              <TableCell>Nombre d'exemplaire</TableCell>
-              <TableCell>Ranger</TableCell>
-              <TableCell>Titre ouvrage</TableCell>
+              <TableCell>Certificat Origine Id</TableCell>
+              <TableCell>Numero</TableCell>
+              <TableCell>Date</TableCell>
+              <TableCell>Nom entreprise</TableCell>
+              <TableCell>Adresse</TableCell>
+              <TableCell>Destination</TableCell>
+              <TableCell>Produit</TableCell>
+              <TableCell>Quantité exporté</TableCell>
+              <TableCell>Unité</TableCell>
+              <TableCell>Nombre de conteneur</TableCell>
+              <TableCell>Prix unitaire</TableCell>
+              <TableCell>Montant</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {this.state.valueList.map(row => {
-              const isSelected = this.isSelected(row.guideId);
+              const isSelected = this.isSelected(row.co2017Id);
               return (
-                <TableRow key={row.guideId}
+                <TableRow key={row.co2017Id}
                       hover
-                      onClick={event => this.handleClick(event, row.guideId)}
+                      onClick={event => this.handleClick(event, row.co2017Id)}
                       role="checkbox"
                       aria-checked={isSelected}
                       tabIndex={-1}
@@ -258,16 +270,20 @@ class Guide extends React.Component {
                     <Checkbox checked={isSelected} />
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    {row.guideId}
+                    {row.co2017Id}
                   </TableCell>
-                  <TableCell>{row.codeOuvrages}</TableCell>
-                  <TableCell>{row.commentaire}</TableCell>
-                  <TableCell>{row.domaines}</TableCell>
-                  <TableCell>{row.etage}</TableCell>
-                  <TableCell>{row.nombreExemplaire}</TableCell>
-                  <TableCell>{row.ranger}</TableCell>
-                  <TableCell>{row.titreOuvrages}</TableCell>
-
+                  <TableCell>{row.numero}</TableCell>
+                  <TableCell>{row.date}</TableCell>
+                  <TableCell>{row.nomEntreprise}</TableCell>
+                  <TableCell>{row.adresse}</TableCell>
+                  <TableCell>{row.destination}</TableCell>
+                  <TableCell>{row.produit}</TableCell>
+                  <TableCell>{row.quantiteExporte}</TableCell>
+                  <TableCell>{row.unite}</TableCell>
+                  <TableCell>{row.nombreConteneur}</TableCell>
+                  <TableCell>{row.prixUnitaire}</TableCell>
+                  <TableCell>{row.montant}</TableCell>
+                  
                 </TableRow>
               );
             })}
@@ -275,79 +291,116 @@ class Guide extends React.Component {
         </Table>
         </Paper>
         <Dialog open={this.state.isAddDrawerOpen} aria-labelledby="simple-dialog-title">
-          <DialogTitle id="simple-dialog-title">Ajouter un Guide</DialogTitle>
+          <DialogTitle id="simple-dialog-title">Ajouter un CO</DialogTitle>
           <DialogContent>
             <TextField
-              id="code-guide"
-              label="Code ouvrage"
+              id="co2017-numero"
+              label="Numéro"
               type="number"
               margin="normal"
-              value={this.state.newGuide.codeOuvrages}
+              value={this.state.newCo2017.numero}
               onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
-              id="commentaire-guide"
-              label="Commentaire"
-              placeholder="Commentaire"
+              id="co2017-date"
+              label="Date"
+              type="date"
+              margin="normal"
+              value={this.state.newCo2017.date}
+              onChange={this.handleChange.bind(this)}
+            />
+            <br/>
+            <TextField
+              id="co2017-nom-entreprise"
+              label="Nom entreprise"
+              placeholder="Nom entreprise"
+              margin="normal"
+              value={this.state.newCo2017.nomEntreprise}
+              onChange={this.handleChange.bind(this)}
+            />
+            <br/>
+            <TextField
+              id="co2017-adresse"
+              label="Adresse"
+              placeholder="Adresse"
               multiline
               margin="normal"
-              value={this.state.newGuide.commentaire}
+              value={this.state.newCo2017.adresse}
               onChange={this.handleChange.bind(this)}
             />
             <br/>
             <TextField
-              id="guide-domaine"
-              label="Domaine"
-              placeholder="Domaine"
-              margin="normal"
-              value={this.state.newGuide.domaines}
-              onChange={this.handleChange.bind(this)}
-            />
-            <br/>
-            <TextField
-              id="guide-etage"
-              label="Etage"
-              type="number"
-              margin="normal"
-              value={this.state.newGuide.etage}
-              onChange={this.handleChange.bind(this)}
-            />
-            <br/>
-            <TextField
-              id="guide-nombre-exemplaire"
-              label="Nombre exemplaire"
-              type="number"
-              margin="normal"
-              value={this.state.newGuide.nombreExemplaire}
-              onChange={this.handleChange.bind(this)}
-            />
-            <br/>
-            <TextField
-              id="guide-ranger"
-              label="Rangé"
-              type="number"
-              margin="normal"
-              value={this.state.newGuide.ranger}
-              onChange={this.handleChange.bind(this)}
-            />
-            <br/>
-            <TextField
-              id="titre-guide"
-              label="Titre ouvrage"
-              placeholder="titre ouvrage"
+              id="co2017-destination"
+              label="Destination"
+              placeholder="Destination"
               multiline
               margin="normal"
-              value={this.state.newGuide.titreOuvrages}
+              value={this.state.newCo2017.destination}
               onChange={this.handleChange.bind(this)}
             />
+            <br/>
+            <TextField
+              id="co2017-produit"
+              label="Produit"
+              placeholder="Produit"
+              margin="normal"
+              value={this.state.newCo2017.produit}
+              onChange={this.handleChange.bind(this)}
+            />
+            <br/>
+            <TextField
+              id="co2017-quatite-export"
+              label="Quantité exporté"
+              type="number"
+              margin="normal"
+              value={this.state.newCo2017.quantiteExporte}
+              onChange={this.handleChange.bind(this)}
+            />
+            <br/>
+            <TextField
+              id="co2017-unite"
+              label="Unité"
+              placeholder="Unité"
+              margin="normal"
+              value={this.state.newCo2017.unite}
+              onChange={this.handleChange.bind(this)}
+            />
+            <br/>
+            <TextField
+              id="co2017-nombre-conteneur"
+              label="Nombre de conteneur"
+              type="number"
+              margin="normal"
+              value={this.state.newCo2017.nombreConteneur}
+              onChange={this.handleChange.bind(this)}
+            />
+            <br/>
+            <TextField
+              id="co2017-prix_unitaire"
+              label="Prix unitaire"
+              placeholder="Prix unitaire"
+              margin="normal"
+              value={this.state.newCo2017.prixUnitaire}
+              onChange={this.handleChange.bind(this)}
+            />
+            <br/>
+            <TextField
+              id="co2017-montant"
+              label="Montant"
+              type="number"
+              margin="normal"
+              value={this.state.newCo2017.montant}
+              onChange={this.handleChange.bind(this)}
+            />
+
 
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button color="primary" onClick={this.saveGuide}>
+            <Button color="primary" onClick={this.saveCo2017}>
               Save
             </Button>
           </DialogActions>
@@ -367,7 +420,7 @@ class Guide extends React.Component {
   }
 }
 
-Guide.propTypes = {
+Co2017.propTypes = {
   searchString: PropTypes.string
 };
-export default Guide;
+export default Co2017;

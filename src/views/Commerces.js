@@ -109,7 +109,7 @@ class Commerces extends React.Component {
     this.setState({ isDrawerOpen: false });
   };
 
-  saveECommerce = () => {
+  saveCommerce = () => {
     let self = this;
     console.log(JSON.stringify(this.state.newCommerce));
     fetch('http://localhost:8080/commerce', {
@@ -221,7 +221,7 @@ class Commerces extends React.Component {
           enableEdit={this.state.enableEdit}
           deleteButtonHandler={this.handleDelete.bind(this)}
           enableDelete={this.state.enableDelete}
-          exportButtonHandler={this.exportEntreprise.bind(this)}
+          exportButtonHandler={this.exportCommerce.bind(this)}
           openHandler={this.handleOpen.bind(this)}/>
         <Paper style={paperStyle}>
         <Table style={tableStyle}>

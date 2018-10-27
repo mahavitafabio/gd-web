@@ -58,7 +58,7 @@ class Services extends React.Component {
     if (typeof(q) == "undefined") {
       q = '';
     }
-    fetch('http://localhost:8080/service?q=' + q)
+    fetch('http://localhost:8080/chervice?q=' + q)
     .then(result=>result.json())
     .then(items=>this.setState({valueList: items}));
   }
@@ -80,7 +80,7 @@ class Services extends React.Component {
   handleDelete = () => {
     let self = this;
     console.log(JSON.stringify(this.state.selected));
-    fetch('http://localhost:8080/service', {
+    fetch('http://localhost:8080/chervice', {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',
@@ -112,7 +112,7 @@ class Services extends React.Component {
   saveService = () => {
     let self = this;
     console.log(JSON.stringify(this.state.newService));
-    fetch('http://localhost:8080/service', {
+    fetch('http://localhost:8080/chervice', {
       method: this.state.operation,
       headers: {
         'Accept': 'application/json',
@@ -129,7 +129,7 @@ class Services extends React.Component {
   };
 
   exportService = () => {
-    fetch('http://localhost:8080/service/export')
+    fetch('http://localhost:8080/chervice/export')
     .then(result=> { return result.blob() })
     .then(data=> {
       let timeStamp = moment(new Date()).format('DDMMYY');
@@ -161,7 +161,7 @@ class Services extends React.Component {
     console.log(event.target.files[0]);
     var data = new FormData();
     data.append("data", file);
-    fetch('http://localhost:8080/service/upload', { // Your POST endpoint
+    fetch('http://localhost:8080/chervice/upload', { // Your POST endpoint
       method: 'POST',
       body: data // This is your file object
     }).then(function() {
@@ -221,7 +221,7 @@ class Services extends React.Component {
           enableEdit={this.state.enableEdit}
           deleteButtonHandler={this.handleDelete.bind(this)}
           enableDelete={this.state.enableDelete}
-          exportButtonHandler={this.exportEntreprise.bind(this)}
+          exportButtonHandler={this.exportService.bind(this)}
           openHandler={this.handleOpen.bind(this)}/>
         <Paper style={paperStyle}>
         <Table style={tableStyle}>
