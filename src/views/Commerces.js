@@ -252,7 +252,7 @@ class Commerces extends React.Component {
                     <Checkbox checked={isSelected} />
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    {row.entreprisesId}
+                    {row.commerceId}
                   </TableCell>
                   <TableCell>{row.nomEntreprise}</TableCell>
                   <TableCell>{row.adresseEntreprise}</TableCell>

@@ -258,7 +258,7 @@ class Revue extends React.Component {
                     <Checkbox checked={isSelected} />
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    {row.ouvrageId}
+                    {row.revuId}
                   </TableCell>
                   <TableCell>{row.codeOuvrages}</TableCell>
                   <TableCell>{row.commentaire}</TableCell>
