@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import CloseIcon from '@material-ui/icons/Close';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -28,29 +29,32 @@ const styles = theme => ({
 });
 
 class AppMenuNew extends React.Component {
-  state = {
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      openCompanies: false,
+      openWorks: false,
+      openOrigin: false
+    }
+  }
 
   handleClick = () => {
     this.setState(state => ({ open: !state.open }));
   };
 
-  handleClickO = () => {
-    this.setState(state => ({ open: !state.open }));
+  handleClickCompanies = () => {
+    this.setState(state => ({ openCompanies: !state.openCompanies }));
+    console.log('open', this.state.open);
+    console.log('openCompanies', this.state.openCompanies);
   };
 
-  handleClickC = () => {
-    this.setState(state => ({ open: !state.open }));
+  handleClickWorks = () => {
+    this.setState(state => ({ openWorks: !state.openWorks }));
   };
 
-  toggleDrawer = (side, open) => () => {
-    this.setState({
-      [side]: open,
-    });
+  handleClickOrigin = () => {
+    this.setState(state => ({ openOrigin: !state.openOrigin }));
   };
 
   render() {
@@ -58,138 +62,136 @@ class AppMenuNew extends React.Component {
 
     const sideList = (
       <List component="nav">
-        <ListItem button onClick={this.handleClick} divider>
-            <ListItemText primary="Entreprises" />
-            </ListItem>
-              <Collapse in={this.state.open} timeout="auto">
-                  <List component="nav" disablePadding>
-                    <ListItem button className={classes.nested}>
-                      <Link to={`/entreprises`} >
-                        <ListItemText primary="Industries" />
-                      </Link>
-                    </ListItem>
-                    <ListItem button className={classes.nested}>
-                      <Link to={`/services`} >
-                        <ListItemText primary="Services" />
-                      </Link>
-                    </ListItem>
-                    <ListItem button className={classes.nested}>
-                      <Link to={`/commerces`} >
-                        <ListItemText primary="Commerces" />
-                      </Link>
-                    </ListItem>
-                  </List>
-              </Collapse>
+        <ListItem button onClick={this.handleClickCompanies} divider>
+            <ListItemText primary="ABC" />
+        </ListItem>
+        <Collapse in={this.state.openCompanies} timeout="auto">
+            <List component="nav" disablePadding>
+              <ListItem button className={classes.nested}>
+                <Link to={`/entreprises`} onClick={this.handleClick}>
+                  <ListItemText primary="Industries" />
+                </Link>
+              </ListItem>
+              <ListItem button className={classes.nested}>
+                <Link to={`/services`} onClick={this.handleClick}>
+                  <ListItemText primary="Services" />
+                </Link>
+              </ListItem>
+              <ListItem button className={classes.nested}>
+                <Link to={`/commerces`} onClick={this.handleClick}>
+                  <ListItemText primary="Commerces" />
+                </Link>
+              </ListItem>
+            </List>
+        </Collapse>
         <Divider />
-        <ListItem button onClick={this.handleClickO} divider>
+        <ListItem button onClick={this.handleClickWorks} divider>
             <ListItemText primary="Ouvrages" />
         </ListItem>
-              <Collapse in={this.state.open} timeout="auto">
-                  <List component="nav" disablePadding>
-                    <ListItem button className={classes.nested}>
-                      <Link to={`/ouvrages`} >
-                        <ListItemText primary="Memoires" />
-                      </Link>
-                    </ListItem>
-                    <ListItem button className={classes.nested}>
-                      <Link to={`/manuel`} >
-                        <ListItemText primary="Manuels" />
-                      </Link>
-                    </ListItem>
-                    <ListItem button className={classes.nested}>
-                      <Link to={`/guide`} >
-                        <ListItemText primary="Guides" />
-                      </Link>
-                    </ListItem>
-                    <ListItem button className={classes.nested}>
-                      <Link to={`/revue`} >
-                        <ListItemText primary="Revues" />
-                      </Link>
-                    </ListItem>
-                    <ListItem button className={classes.nested}>
-                      <Link to={`/autres`} >
-                        <ListItemText primary="Autres" />
-                      </Link>
-                    </ListItem>
-                  </List>
-              </Collapse>
+        <Collapse in={this.state.openWorks} timeout="auto">
+            <List component="nav" disablePadding>
+              <ListItem button className={classes.nested}>
+                <Link to={`/ouvrages`} onClick={this.handleClick}>
+                  <ListItemText primary="Memoires" />
+                </Link>
+              </ListItem>
+              <ListItem button className={classes.nested}>
+                <Link to={`/manuel`} onClick={this.handleClick}>
+                  <ListItemText primary="Manuels" />
+                </Link>
+              </ListItem>
+              <ListItem button className={classes.nested}>
+                <Link to={`/guide`} onClick={this.handleClick}>
+                  <ListItemText primary="Guides" />
+                </Link>
+              </ListItem>
+              <ListItem button className={classes.nested}>
+                <Link to={`/revue`} onClick={this.handleClick}>
+                  <ListItemText primary="Revues" />
+                </Link>
+              </ListItem>
+              <ListItem button className={classes.nested}>
+                <Link to={`/autres`} onClick={this.handleClick}>
+                  <ListItemText primary="Autres" />
+                </Link>
+              </ListItem>
+            </List>
+        </Collapse>
         <ListItem button>
-          <Link to={`/fichier-consulaires`} >
+          <Link to={`/fichier-consulaires`} onClick={this.handleClick}>
             <ListItemText primary="Fichier Consulaires" />
           </Link>
         </ListItem>
         <Divider light />
-        <ListItem button onClick={this.handleClickC} divider>
+        <ListItem button onClick={this.handleClickOrigin} divider>
             <ListItemText primary="Certificat Origine" />
         </ListItem>
-                <Collapse in={this.state.open} timeout="auto">
-                  <List component="nav" disablePadding>
-                    <ListItem button className={classes.nested}>
-                      <Link to={`/co2017`} >
-                        <ListItemText primary="Co2017" />
-                      </Link>
-                    </ListItem>
-                    <ListItem button className={classes.nested}>
-                      <Link to={`/co2018`} >
-                        <ListItemText primary="Co2018" />
-                      </Link>
-                    </ListItem>
-                    <ListItem button className={classes.nested}>
-                      <Link to={`/co2019`} >
-                        <ListItemText primary="Co2019" />
-                      </Link>
-                    </ListItem>
-                    <ListItem button className={classes.nested}>
-                      <Link to={`/co2020`} >
-                        <ListItemText primary="Co2020" />
-                      </Link>
-                    </ListItem>
-                    <ListItem button className={classes.nested}>
-                      <Link to={`/co2021`} >
-                        <ListItemText primary="Co2021" />
-                      </Link>
-                    </ListItem>
-                    <ListItem button className={classes.nested}>
-                      <Link to={`/co2022`} >
-                        <ListItemText primary="Co2022" />
-                      </Link>
-                    </ListItem>
-                    <ListItem button className={classes.nested}>
-                      <Link to={`/co2023`} >
-                        <ListItemText primary="Co2023" />
-                      </Link>
-                    </ListItem>
-                    <ListItem button className={classes.nested}>
-                      <Link to={`/certificat`} >
-                        <ListItemText primary="Co2024" />
-                      </Link>
-                    </ListItem>
-                  </List>
-              </Collapse>
+        <Collapse in={this.state.openOrigin} timeout="auto">
+          <List component="nav" disablePadding>
+            <ListItem button className={classes.nested}>
+              <Link to={`/co2017`} onClick={this.handleClick}>
+                <ListItemText primary="Co2017" />
+              </Link>
+            </ListItem>
+            <ListItem button className={classes.nested}>
+              <Link to={`/co2018`} onClick={this.handleClick}>
+                <ListItemText primary="Co2018" />
+              </Link>
+            </ListItem>
+            <ListItem button className={classes.nested}>
+              <Link to={`/co2019`} onClick={this.handleClick}>
+                <ListItemText primary="Co2019" />
+              </Link>
+            </ListItem>
+            <ListItem button className={classes.nested}>
+              <Link to={`/co2020`} onClick={this.handleClick}>
+                <ListItemText primary="Co2020" />
+              </Link>
+            </ListItem>
+            <ListItem button className={classes.nested}>
+              <Link to={`/co2021`} onClick={this.handleClick}>
+                <ListItemText primary="Co2021" />
+              </Link>
+            </ListItem>
+            <ListItem button className={classes.nested}>
+              <Link to={`/co2022`} onClick={this.handleClick}>
+                <ListItemText primary="Co2022" />
+              </Link>
+            </ListItem>
+            <ListItem button className={classes.nested}>
+              <Link to={`/co2023`} onClick={this.handleClick}>
+                <ListItemText primary="Co2023" />
+              </Link>
+            </ListItem>
+            <ListItem button className={classes.nested}>
+              <Link to={`/certificat`} onClick={this.handleClick}>
+                <ListItemText primary="Co2024" />
+              </Link>
+            </ListItem>
+          </List>
+        </Collapse>
       </List>
-    );
+  );
 
     return (
       <div>
-        <IconButton onClick={this.toggleDrawer('left', true)} className={classes.menuButton} color="inherit" aria-label="Open drawer">
-            <MenuIcon />
-          </IconButton>
-        <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
+        <IconButton onClick={this.handleClick} className={classes.menuButton} color="inherit" aria-label="Open drawer">
+          <MenuIcon/>
+        </IconButton>
+        <Drawer open={this.state.open}>
           <div
             tabIndex={0}
-            role="button"
-            onClick={this.toggleDrawer('left', false)}
-            onKeyDown={this.toggleDrawer('left', false)}
-          >
-          
-          <AppBar position="static" color="default">
-        <Toolbar>
-          <Typography variant="title" color="inherit">
-            Menu
-          </Typography>
-        </Toolbar>
-      </AppBar>
-          
+            role="button">
+            <AppBar position="static" color="default">
+              <Toolbar>
+                <Typography variant="title" color="inherit">
+                  Menu
+                </Typography>
+                <IconButton onClick={this.handleClick} className={classes.menuButton} color="inherit" aria-label="Open drawer">
+                  <CloseIcon/>
+                </IconButton>
+              </Toolbar>
+            </AppBar>
             {sideList}
           </div>
         </Drawer>
