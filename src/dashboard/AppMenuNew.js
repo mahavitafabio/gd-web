@@ -15,14 +15,17 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
 
-const styles = {
+const styles = theme => ({
   list: {
     width: 250,
   },
   fullList: {
     width: 'auto',
   },
-};
+  nested: {
+    paddingLeft: theme.spacing.unit * 8,
+  },
+});
 
 class AppMenuNew extends React.Component {
   state = {
@@ -33,6 +36,14 @@ class AppMenuNew extends React.Component {
   };
 
   handleClick = () => {
+    this.setState(state => ({ open: !state.open }));
+  };
+
+  handleClickO = () => {
+    this.setState(state => ({ open: !state.open }));
+  };
+
+  handleClickC = () => {
     this.setState(state => ({ open: !state.open }));
   };
 
@@ -47,23 +58,22 @@ class AppMenuNew extends React.Component {
 
     const sideList = (
       <List component="nav">
-        <ListItem button onClick={this.handleClick}>
+        <ListItem button onClick={this.handleClick} divider>
             <ListItemText primary="Entreprises" />
             </ListItem>
               <Collapse in={this.state.open} timeout="auto">
                   <List component="nav" disablePadding>
-                    <ListItem button>
+                    <ListItem button className={classes.nested}>
                       <Link to={`/entreprises`} >
                         <ListItemText primary="Industries" />
                       </Link>
                     </ListItem>
-                    <Divider />
-                    <ListItem button divider>
+                    <ListItem button className={classes.nested}>
                       <Link to={`/services`} >
                         <ListItemText primary="Services" />
                       </Link>
                     </ListItem>
-                    <ListItem button>
+                    <ListItem button className={classes.nested}>
                       <Link to={`/commerces`} >
                         <ListItemText primary="Commerces" />
                       </Link>
@@ -71,22 +81,91 @@ class AppMenuNew extends React.Component {
                   </List>
               </Collapse>
         <Divider />
-        <ListItem button divider>
-          <Link to={`/ouvrages`} >
+        <ListItem button onClick={this.handleClickO} divider>
             <ListItemText primary="Ouvrages" />
-          </Link>
         </ListItem>
+              <Collapse in={this.state.open} timeout="auto">
+                  <List component="nav" disablePadding>
+                    <ListItem button className={classes.nested}>
+                      <Link to={`/ouvrages`} >
+                        <ListItemText primary="Memoires" />
+                      </Link>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <Link to={`/manuel`} >
+                        <ListItemText primary="Manuels" />
+                      </Link>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <Link to={`/guide`} >
+                        <ListItemText primary="Guides" />
+                      </Link>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <Link to={`/revue`} >
+                        <ListItemText primary="Revues" />
+                      </Link>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <Link to={`/autres`} >
+                        <ListItemText primary="Autres" />
+                      </Link>
+                    </ListItem>
+                  </List>
+              </Collapse>
         <ListItem button>
           <Link to={`/fichier-consulaires`} >
             <ListItemText primary="Fichier Consulaires" />
           </Link>
         </ListItem>
         <Divider light />
-        <ListItem button>
-          <Link to={`/certificat`} >
+        <ListItem button onClick={this.handleClickC} divider>
             <ListItemText primary="Certificat Origine" />
-          </Link>
         </ListItem>
+                <Collapse in={this.state.open} timeout="auto">
+                  <List component="nav" disablePadding>
+                    <ListItem button className={classes.nested}>
+                      <Link to={`/co2017`} >
+                        <ListItemText primary="Co2017" />
+                      </Link>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <Link to={`/co2018`} >
+                        <ListItemText primary="Co2018" />
+                      </Link>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <Link to={`/co2019`} >
+                        <ListItemText primary="Co2019" />
+                      </Link>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <Link to={`/co2020`} >
+                        <ListItemText primary="Co2020" />
+                      </Link>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <Link to={`/co2021`} >
+                        <ListItemText primary="Co2021" />
+                      </Link>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <Link to={`/co2022`} >
+                        <ListItemText primary="Co2022" />
+                      </Link>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <Link to={`/co2023`} >
+                        <ListItemText primary="Co2023" />
+                      </Link>
+                    </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <Link to={`/certificat`} >
+                        <ListItemText primary="Co2024" />
+                      </Link>
+                    </ListItem>
+                  </List>
+              </Collapse>
       </List>
     );
 
