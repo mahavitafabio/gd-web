@@ -257,7 +257,7 @@ class Co2020 extends React.Component {
           </TableHead>
           <TableBody>
             {this.state.valueList.map(row => {
-              const isSelected = this.isSelected(row.co2020d);
+              const isSelected = this.isSelected(row.co2020Id);
               return (
                 <TableRow key={row.co2020Id}
                       hover

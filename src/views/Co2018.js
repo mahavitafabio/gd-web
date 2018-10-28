@@ -129,7 +129,7 @@ class Co2018 extends React.Component {
     this.setState({newCo2018:{}});
   };
 
-  exportCo2017 = () => {
+  exportCo2018 = () => {
     fetch('http://localhost:8080/certificat18/export')
     .then(result=> { return result.blob() })
     .then(data=> {

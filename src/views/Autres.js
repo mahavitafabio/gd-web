@@ -319,7 +319,7 @@ class Autres extends React.Component {
               label="Nombre exemplaire"
               type="number"
               margin="normal"
-              value={this.state.newOuvrage.nombreExemplaire}
+              value={this.state.newAutre.nombreExemplaire}
               onChange={this.handleChange.bind(this)}
             />
             <br/>

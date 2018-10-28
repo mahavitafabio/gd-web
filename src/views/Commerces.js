@@ -70,7 +70,7 @@ class Commerces extends React.Component {
   };
 
   handleOpenEdit = () => {
-    let newCommerce = this.state.valueList.find(o => o.commerceId === this.state.selected[0]);
+    let newCommerce = this.state.valueList.find(f => f.commerceId === this.state.selected[0]);
     console.log(JSON.stringify(newCommerce));
     this.setState({ newCommerce });
     this.setState({ operation: 'PUT' });
@@ -149,7 +149,7 @@ class Commerces extends React.Component {
       newCommerce.activitePrincipale = event.target.value;
     } else if (event.target.id === 'commerce-contact') {
       newCommerce.contact = event.target.value;
-    } else if (event.target.id === 'Commerce-nom-responsable') {
+    } else if (event.target.id === 'commerce-nom-responsable') {
       newCommerce.nomResponsable = event.target.value;
     }
     this.setState({newCommerce});

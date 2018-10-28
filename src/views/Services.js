@@ -267,7 +267,7 @@ class Services extends React.Component {
         </Table>
         </Paper>
         <Dialog open={this.state.isAddDrawerOpen} aria-labelledby="simple-dialog-title">
-          <DialogTitle id="simple-dialog-title">Ajouter une Service</DialogTitle>
+          <DialogTitle id="simple-dialog-title">Ajouter un Service</DialogTitle>
           <DialogContent>
             <TextField
               id="nom-service"

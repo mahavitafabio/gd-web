@@ -135,7 +135,7 @@ class Ouvrages extends React.Component {
     .then(data=> {
       let timeStamp = moment(new Date()).format('DDMMYY');
       let blob = new Blob([data], { type: 'application/octet-stream' });
-      FileSaver.saveAs(blob, "Ouvrages" + timeStamp + '.' + 'xlsx');
+      FileSaver.saveAs(blob, "Memoires" + timeStamp + '.' + 'xlsx');
     });
   }
 
@@ -275,7 +275,7 @@ class Ouvrages extends React.Component {
         </Table>
         </Paper>
         <Dialog open={this.state.isAddDrawerOpen} aria-labelledby="simple-dialog-title">
-          <DialogTitle id="simple-dialog-title">Ajouter un Ouvrage</DialogTitle>
+          <DialogTitle id="simple-dialog-title">Ajouter un Memoire</DialogTitle>
           <DialogContent>
             <TextField
               id="code-ouvrages"

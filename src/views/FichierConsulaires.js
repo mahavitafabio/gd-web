@@ -162,8 +162,6 @@ class FichierConsulaires extends React.Component {
       newFichierConsulaire.numeroRegistre = event.target.value;
     } else if (event.target.id === 'sigle-consulaire') {
       newFichierConsulaire.sigle = event.target.value;
-    } else if (event.target.id === 'date-modification') {
-      newFichierConsulaire.updatedDate = event.target.value;
     }
     this.setState({newFichierConsulaire});
   }
@@ -252,7 +250,6 @@ class FichierConsulaires extends React.Component {
               <TableCell>Numéro identite</TableCell>
               <TableCell>Numéro registre</TableCell>
               <TableCell>Sigle</TableCell>
-              <TableCell>Date de modification</TableCell>
               
             </TableRow>
           </TableHead>
@@ -283,7 +280,6 @@ class FichierConsulaires extends React.Component {
                   <TableCell>{row.numeroIdentite}</TableCell>
                   <TableCell>{row.numeroRegistre}</TableCell>
                   <TableCell>{row.sigle}</TableCell>
-                  <TableCell>{row.updatedDate}</TableCell>
                   
                 </TableRow>
               );
@@ -384,15 +380,6 @@ class FichierConsulaires extends React.Component {
               placeholder="Sigle"
               margin="normal"
               value={this.state.newFichierConsulaire.sigle}
-              onChange={this.handleChange.bind(this)}
-            />
-            <br/>
-            <TextField
-              id="date-modification"
-              label="Date modification"
-              type="date"
-              margin="normal"
-              value={this.state.newFichierConsulaire.updatedDate}
               onChange={this.handleChange.bind(this)}
             />
 

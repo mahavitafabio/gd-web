@@ -110,7 +110,7 @@ class Co2019 extends React.Component {
     this.setState({ isDrawerOpen: false });
   };
 
-  saveCo2017 = () => {
+  saveCo2019 = () => {
     let self = this;
     console.log(JSON.stringify(this.state.newCo2019));
     fetch('http://localhost:8080/certificat19', {
@@ -129,7 +129,7 @@ class Co2019 extends React.Component {
     this.setState({newCo2019:{}});
   };
 
-  exportCo2017 = () => {
+  exportCo2019 = () => {
     fetch('http://localhost:8080/certificat19/export')
     .then(result=> { return result.blob() })
     .then(data=> {

@@ -63,7 +63,7 @@ class AppMenuNew extends React.Component {
     const sideList = (
       <List component="nav">
         <ListItem button onClick={this.handleClickCompanies} divider>
-            <ListItemText primary="Companies" />
+            <ListItemText primary="Entreprises" />
         </ListItem>
         <Collapse in={this.state.openCompanies} timeout="auto">
             <List component="nav" disablePadding>
@@ -117,8 +117,9 @@ class AppMenuNew extends React.Component {
               </ListItem>
             </List>
         </Collapse>
+        <Divider />
         <ListItem button>
-          <Link to={`/fichier-consulaires`} onClick={this.handleClick}>
+          <Link to={`/fichier-consulaires`} onClick={this.handleClick} divider>
             <ListItemText primary="Fichier Consulaires" />
           </Link>
         </ListItem>
