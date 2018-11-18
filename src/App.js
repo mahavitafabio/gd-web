@@ -39,12 +39,12 @@ class App extends Component {
       {
         path: "/",
         exact: true,
-        toolbar: () => <SearchAppBar header="Entreprises" onSearch={this.onSearch.bind(this)} searchString={this.state.searchString}/>,
+        toolbar: () => <SearchAppBar header="Industries" onSearch={this.onSearch.bind(this)} searchString={this.state.searchString}/>,
         main: () => <Entreprises searchString={this.state.searchString}/>
       },
       {
         path: "/entreprises",
-        toolbar: () => <SearchAppBar header="Entreprises" onSearch={this.onSearch.bind(this)} searchString={this.state.searchString}/>,
+        toolbar: () => <SearchAppBar header="Industries" onSearch={this.onSearch.bind(this)} searchString={this.state.searchString}/>,
         main: () => <Entreprises searchString={this.state.searchString} />
       },
       {

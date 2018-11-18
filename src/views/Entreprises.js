@@ -301,7 +301,6 @@ class Entreprises extends React.Component {
             <TextField
               id="entreprise-contact"
               label="Contact"
-              type="number"
               margin="normal"
               value={this.state.newEntreprise.contact}
               onChange={this.handleChange.bind(this)}

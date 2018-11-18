@@ -388,7 +388,6 @@ class Co2019 extends React.Component {
             <TextField
               id="co2019-montant"
               label="Montant"
-              type="number"
               margin="normal"
               value={this.state.newCo2019.montant}
               onChange={this.handleChange.bind(this)}

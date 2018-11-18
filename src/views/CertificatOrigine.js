@@ -388,7 +388,6 @@ class CertificatOrigine extends React.Component {
             <TextField
               id="co-montant"
               label="Montant"
-              type="number"
               margin="normal"
               value={this.state.newCertificatOrigine.montant}
               onChange={this.handleChange.bind(this)}

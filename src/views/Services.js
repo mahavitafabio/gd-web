@@ -301,7 +301,6 @@ class Services extends React.Component {
             <TextField
               id="service-contact"
               label="Contact"
-              type="number"
               margin="normal"
               value={this.state.newService.contact}
               onChange={this.handleChange.bind(this)}
